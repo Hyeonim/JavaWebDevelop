@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/owner/viewRest}">
+<div class="menu-container" th:fragment="menuContent">
+    <table>
+        <tr>
+            <th>메뉴 이름</th>
+            <th>가격</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        <tbody>
+        <tr th:each="menu : ${menuList}">
+            <td th:text="${menu.getMenuName()}"></td>
+            <td th:text="${menu.getMenuPrice()}"></td>
+            <td><input type="button" value="수정" th:onclick="|location.href='@{/owner/viewRest/updateMenu/{menuNo}(menuNo=${menu.getMenuNo()})}'|"></td>
+            <td><input type="button" value="삭제" th:onclick="|location.href='@{/owner/viewRest/deleteMenu/{menuNo}(menuNo=${menu.getMenuNo()})}'|"></td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="button" value="메뉴 추가" th:onclick="|location.href='@{/owner/viewRest/addMenu}'|">
+</div>
+
+</html>

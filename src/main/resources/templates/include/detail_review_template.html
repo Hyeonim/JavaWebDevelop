@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block th:fragment="detailReviewTemplate(list, bSlide)">
+
+<div class="reviewT" th:each="review : ${list}">
+<!--/*[+    <span th:text="${review.id}"></span> +]*/-->
+    <p class="username" th:text="${review.userNo.userName}"></p>
+    <p class="star" th:text="${review.getRevScore()}"></p>
+    <p th:text="${review.restNo.restName}"></p>
+    <p th:text="${review.restNo.restCategory}"></p>
+    <p class="comment" th:text="${review.revContent}"></p>
+    <img th:if="${review.base64Image!=''}" th:src="'data:image/png;base64,' + ${review.base64Image}" alt="리뷰 이미지"/>
+    <div class="overtip" th:if="${bSlide}==1">
+        <span th:text="${review.restNo.restName}"></span>
+        <span th:text="${review.restNo.restCategory}"></span>
+        <hr>
+        <span><a th:href="'/detail?restNo='+${review.restNo.restNo}">식당바로가기</a></span>
+        <span th:onclick="|addWishList(this,${review.restNo.restNo})|">관심등록>></span>
+    </div>
+</div>
+
+</th:block>
+
+</html>

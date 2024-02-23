@@ -1,0 +1,63 @@
+div#reservation button.reserve {
+    text-decoration: none;
+    border-color: transparent;
+    border-width: 2px;
+    border-style: solid;
+    background: #F8F8F8;
+    border-color: #F8F8F8;
+    color: #5C11A6;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 0;
+    max-width: 100%;
+    outline: none;
+    pointer-events: auto;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 0 16px;
+    height: 40px;
+    min-width: 120px;
+    border-radius: 40px;
+    font-weight: 700;
+    transition: 120ms ease-in-out;
+    opacity: 1;
+    margin-bottom: 12px;
+    height: auto;
+    padding: 0;
+    background: white;
+}
+div#reservation button.selected {
+    color: #fff;
+    background :linear-gradient(to bottom right,#7935D2,#5C11A6);
+}
+
+div#customer_information_input{
+    display : flex;
+    width : 300px;
+    justify-content : space-between;
+}
+div#customer_information_input div{
+    display : flex;
+    border : solid 1px #D2D2D2;
+    position : relative;
+    height : 30px;
+}
+div#customer_information_input #nop{
+    /*height : 30px;*/
+}
+div#customer_information_input span{
+    position : absolute;
+    top : 5px;
+    left : 12px;
+}
+div#customer_information_input select{
+    width: 100%;
+    appearance: none;
+    -webkit-appearance : none;
+    border-color : transparent;
+    background-color : transparent;
+    padding: 0 0 0 calc(24px + 24px);
+    z-index : 1;
+}

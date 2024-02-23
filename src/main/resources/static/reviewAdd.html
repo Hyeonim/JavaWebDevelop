@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰 작성</title>
+</head>
+<body>
+
+<form action="/reviewAdd" method="post" enctype="multipart/form-data">
+    <label>이름 : <input type="text" name="userName"></label><br>
+    <label>평점 : <input type="text" name="revScore"></label><br>
+    <label>내용 : <input type="text" name="revContent"></label><br>
+    <label>식당번호 : <input type="text" name="restNo"></label><br>
+    <label>이미지 : <input type="text" name="revImg"></label><br>
+    <input type="file" name="file"><br>
+    <input type="submit" value="등록">
+</form>
+
+
+<form action="/ownerRestImgAdd" method="post" enctype="multipart/form-data">
+    <label>식당번호 : <input type="text" name="restNo"></label><br>
+    <label>이미지 : <input type="text" name="revImg"></label><br>
+    <input type="file" name="file"><br>
+    <input type="submit" value="등록">
+</form>
+
+
+</body>
+</html>

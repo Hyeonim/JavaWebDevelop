@@ -1,0 +1,326 @@
+/** {*/
+/*    border: solid 1px black;*/
+/*}*/
+
+#top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#searchBar {
+    height: 40px;
+    margin-left: 30%;
+    width: 500px;
+    border-radius: 10px;
+}
+
+.f {
+    position: relative;
+    transform: translateY(0%);
+}
+
+#main {
+
+    width: 100%;
+}
+
+#left {
+    width: 25%;
+    height: auto;
+    float: left;
+    box-sizing: border-box;
+}
+
+#right {
+    width: 75%;
+    height: 20px;
+    float: right;
+    box-sizing: border-box;
+    /*overflow:auto;*/
+
+}
+
+
+/*#main-box{*/
+/*    width: 1000px;*/
+/*    justify-content: space-around; !* 요소들을 가운데 정렬하여 공간을 동일하게 분배 *!*/
+/*    align-items: center; !* 요소들을 세로 중앙에 정렬 *!*/
+/*    border: solid 2px #f2f2f2;*/
+/*    border-radius: 20px;*/
+/*    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); !* 그림자 속성 *!*/
+/*    margin-top: 50px;*/
+/*}*/
+
+#content-box {
+    height: 300px;
+    display: flex; /* Flexbox 사용 */
+    justify-content: space-around; /* 요소들을 가운데 정렬하여 공간을 동일하게 분배 */
+    align-items: center; /* 요소들을 세로 중앙에 정렬 */
+    border-radius: 20px;
+}
+
+
+/*#main-box2{*/
+/*    width: 1000px;*/
+/*    justify-content: space-around; !* 요소들을 가운데 정렬하여 공간을 동일하게 분배 *!*/
+/*    align-items: center; !* 요소들을 세로 중앙에 정렬 *!*/
+/*    border: solid 2px #f2f2f2;*/
+/*    border-radius: 20px;*/
+/*    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); !* 그림자 속성 *!*/
+/*    margin-top: 50px;*/
+/*}*/
+
+#content-box2 {
+    height: 300px;
+    display: flex; /* Flexbox 사용 */
+    justify-content: space-around; /* 요소들을 가운데 정렬하여 공간을 동일하게 분배 */
+    align-items: center; /* 요소들을 세로 중앙에 정렬 */
+    border-radius: 20px;
+}
+
+/* 스타일은 이 곳에 추가하세요 */
+.w3-sidebar {
+    width: 250px; /* 사이드바 너비 */
+    background-color: #333;
+    color: #FFF;
+    height: 100vh; /* viewport 높이의 100% */
+    overflow-y: auto; /* 너무 긴 경우 스크롤 허용 */
+}
+
+/* 화면이 768px 이하일 때 */
+@media screen and (max-width: 768px) {
+    .w3-sidebar {
+        width: 100%; /* 전체 너비로 변경 */
+    }
+}
+/*table#dinningTable {*/
+/*    width: 130px;*/
+/*}*/
+/*table#dinningTable th:nth-of-type(3){*/
+/*    width:380px;*/
+/*}*/
+/*table#dinningTable th:nth-of-type(4){*/
+/*    width:200px;*/
+/*}*/
+
+/*canvas {*/
+/*    width: 200px;*/
+/*    height: 200px;*/
+/*}*/
+
+#alarm{
+
+    font-size: 40px;
+}
+
+
+.main-box {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.box-header {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+.box-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.box-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+
+}
+
+.chart-container {
+    width: 45%;
+    height: 300px;
+}
+
+.chart {
+    width: 100%;
+    height: 100%;
+}
+/** {*/
+/*    border: solid 1px blue;*/
+/*}*/
+
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+#right {
+    margin-top: 33px;
+    background-color: #ffffff;
+    padding: 90px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    height: 200vh;
+}
+
+h1 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+th {
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination li {
+    cursor: pointer;
+}
+
+.pagination li.active a {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.pagination li.disabled a {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
+}
+
+/*상세보기 글들*/
+#right2 {
+    margin-top: 40px;
+    margin-right: 75px;
+    background-color: #ffffff;
+    padding: 90px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    width: 75%;
+    height: auto;
+    float: right;
+    box-sizing: border-box;
+    /*overflow:auto;*/
+}
+
+/*목록*/
+#right3 {
+    width: 75%;
+    /*height: auto;*/
+    float: right;
+    box-sizing: border-box;
+    margin-top: -74px;
+    background-color: #ffffff;
+    padding: 90px;
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    height: 107vh; /* 높이를 화면 높이의 80%로 설정 */
+    /*overflow:auto;*/
+}
+
+.fifth {
+    border-color: black;
+    width: 90px;
+    height: 50px;
+// border: 0;
+    border-radius: 10px;
+    color: black;
+;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 150ms ease-in-out;
+
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 100%;
+        background: black
+    ;
+        z-index: -1;
+        transition: width 150ms ease-in-out;
+    }
+
+    &:hover {
+        color: white;
+        &:after {
+            width: 110%;
+        }
+    }
+}
+
+.fifth2 {
+    border-color: black;
+    width: 90px;
+    height: 50px;
+    border-radius: 10px;
+    color: black;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 150ms ease-in-out;
+
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 100%;
+        background: #007bff; /* 바꾸고자 하는 배경색 */
+        z-index: -1;
+        transition: width 150ms ease-in-out;
+    }
+
+    &:hover {
+        color: white;
+        &:after {
+            width: 110%;
+        }
+    }
+}
+
+
+#NBoxDiv{
+
+    margin-left: 960px;
+    margin-bottom: 10px;
+}

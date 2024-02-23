@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 목록</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right3" style="margin-right: 100px;">
+
+<!--        <h1 style="margin-top: 100px">공지사항 목록</h1>-->
+
+<!--        <input type="text" id="searchInput4" placeholder="공지사항 제목으로 검색" onchange="searchDinning4()">-->
+<!--        <button onclick="searchDinning4()">검색</button>-->
+<div style="display: flex; justify-content: center;">
+        <table id="noticeTable" style="text-align: center; width: 50%;">
+            <h2>고정 공지사항</h2>
+
+            <thead>
+
+            <tr>
+                <th>고정</th>
+                <th>번호</th>
+                <th>제목</th>
+<!--                <th>작성자</th>-->
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="list, listIndex : ${head}" th:onclick="'javascript:redirectToNoticeDetail(\'' + ${list.id} + '\')'">
+
+                <td>
+                    <form id="myForm" action="/manager/managerPage_NoticeHead" method="POST">
+                        <input type="hidden" id="myInput" name="id" th:value="${list.id}">
+                        <input type="hidden" name="head" value="false">
+                        <input type="checkbox" id="myCheckbox" th:checked="${list.importantNotice}" onchange="submitForm(this)">
+                    </form>
+                </td>
+
+                <td th:text="${list.id}"></td>
+                <td th:text="${list.subject}"></td>
+<!--                <td th:text="${list.writer}"></td>-->
+                <td th:text="${list.writeDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+</div>
+
+
+            <table id="noticeTable" style="text-align: center;">
+                <thead>
+                <tr>
+                    <th>고정</th>
+                    <th>번호</th>
+                    <th>제목</th>
+<!--                    <th>작성자</th>-->
+                    <th>작성일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="list, listIndex : ${list}" th:onclick="'javascript:redirectToNoticeDetail(\'' + ${list.id} + '\')'" >
+
+                    <td>
+                        <form id="myForm" action="/manager/managerPage_NoticeHead" method="POST">
+                            <input type="hidden" id="myInput" name="id" th:value="${list.id}">
+                            <input type="hidden" name="head" value="false">
+                            <input type="checkbox" id="myCheckbox" th:checked="${list.importantNotice}" onchange="submitForm(this)">
+                        </form>
+                    </td>
+
+                    <td th:text="${list.id}"></td>
+                    <td th:text="${list.subject}"></td>
+<!--                    <td th:text="${list.writer}"></td>-->
+                    <td th:text="${list.writeDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        <div th:if="${!list.isEmpty()}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!list.hasPrevious} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{|?page=${list.number-1 < 0 ? 0 : list.number-1}|}">
+                        <span>이전</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, list.totalPages-1)}"
+                    th:if="${page >= list.number-5 and page <= list.number+5}"
+                    th:classappend="${page == list.number} ? 'active'"
+                    class="page-item">
+                    <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                </li>
+                <li class="page-item" th:classappend="${!list.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${list.number+1}|}">
+                        <span>다음</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+
+        // function submitForm(my) {
+        //     let confirmation = confirm("상단에 고정하시겠습니까?");
+        //     // let form = document.getElementById("myForm");
+        //     let form = document.getElementById("myForm");
+        //     let confirmInput = my.parentNode.querySelector("input[name=head]");
+        //
+        //     confirmInput.value = confirmation;
+        //     form.submit();
+        // }
+
+        function submitForm(checkbox) {
+            let confirmation = confirm("상단에 고정하시겠습니까?");
+            let form = checkbox.form;
+            let confirmInput = form.querySelector("input[name=head]");
+            let idInput = form.querySelector("input[name=id]");
+
+            confirmInput.value = confirmation;
+            form.submit();
+        }
+
+
+
+
+
+        // function moveNotice(checkbox) {
+        //     var isChecked = checkbox.checked;
+        //     var row = checkbox.parentNode.parentNode; // 선택한 체크박스가 속한 행
+        //     var tableBody = row.parentNode; // 행이 속한 테이블 바디
+        //
+        //     if (isChecked) {
+        //         // 테이블에서 해당 행을 삭제
+        //         tableBody.removeChild(row);
+        //         // 테이블의 맨 위에 해당 행을 삽입
+        //         tableBody.insertBefore(row, tableBody.firstChild);
+        //     } else {
+        //         // 선택 해제된 경우에는 아무 작업도 수행하지 않습니다.
+        //     }
+        // }
+
+        function redirectToNoticeDetail(noticeId) {
+            document.getElementById("noticeForm").action = "/notice-detail?id=" + noticeId;
+            document.getElementById("noticeForm").submit();
+        }
+
+        // function moveNoticeToTop() {
+        //     var tableBody = document.getElementById("noticeTable").getElementsByTagName('tbody')[0];
+        //     var checkedRows = tableBody.querySelectorAll('input[type="checkbox"]:checked');
+        //
+        //     // Loop through checked checkboxes
+        //     for (var i = 0; i < checkedRows.length; i++) {
+        //         var row = checkedRows[i].parentNode.parentNode; // Get the row of the checked checkbox
+        //         tableBody.removeChild(row); // Remove the row from its current position
+        //         tableBody.insertBefore(row, tableBody.firstChild); // Insert the row at the top of the table
+        //     }
+        // }
+
+    </script>
+
+</div>
+</html>
+
+

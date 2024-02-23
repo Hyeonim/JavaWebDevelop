@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="/user/add_user_form"><button>신규등록</button></a><br>
+<div th:if="${userList != null}">
+    <div th:each="users : ${userList}">
+        <p>-----------------------------------------------------------------------------------</p>
+        <label>유저 번호 : </label><br>
+        <input type="text" th:value="${users.userNo}" name="rest_no"><br>
+        <label>ID : </label><br>
+        <input type="text" th:value="${users.userId}" name="rest_name"><br>
+        <label>이름 : </label><br>
+        <input type="text" size="60" th:value="${users.userName}" name="rest_menu"><br>
+        <label>이메일 : </label><br>
+        <input type="text" size="60" th:value="${users.userEmail}" name="rest_menu"><br>
+        <label>전화번호 : </label><br>
+        <input type="text" size="60" th:value="${users.userTel}" name="rest_menu"><br>
+        <img th:if="${users.userImg != null}" th:src="'data:image/jpeg;base64,' + ${users.base64Image}" alt="User Image" style="max-width: 200px; max-height: 200px;">
+
+        <a th:href="@{/user/update_user_form/{userNo}(userNo=${users.userNo})}"><button>수정하기</button></a>
+        <a th:href="@{/user/delete_user/{userNo}(userNo=${users.userNo})}"><button>삭제하기</button></a>
+    </div>
+</div>
+
+</body>
+</html>

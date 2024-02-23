@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{owner/myPage_layout}">
+
+<th:block th:fragment="content">
+    <th:block th:object="${dinning}">
+        <div class="formDiv">
+            <p><label>가게 이름 : </label><input type="text" name="restName" th:value="*{getRestName()}" readonly></p>
+            <p><label>가게 주소 : </label><input type="text" name="restAddr" th:value="*{getRestAddr()}" readonly></p>
+            <div id="map" style="width:70%;height:300px;margin:10px;"></div>
+            <p><label>가게 번호 : </label><input type="text" name="restTel" th:value="*{getRestTel()}" readonly></p>
+            <p><label>가게 좌석수 : </label><input type="text" name="restSeat" th:value="*{getRestSeat()}" readonly></p>
+            <p><label>가게 이용시간 : </label><input type="text" name="restTime" th:value="*{getRestTime()}" readonly></p>
+            <p><label>가게 휴뮤일 : </label><input type="text" name="restOffDays" th:value="*{getRestOffDays()}" readonly></p>
+            <p><label>가게 주차장 : </label><input type="text" name="restParking" th:value="*{getRestParking()}" readonly></p>
+            <label>가게 메뉴 : </label><th:block th:replace="${menuPage}::menuContent"></th:block>
+            <p> <label>가게 경도 : </label><input type="text" name="restLongitude" th:value="*{getRestLongitude()}" readonly></p>
+            <p><label>가게 소개글 : </label><textarea name="restDesc" rows="5" readonly>[[*{getRestDescription()}]]</textarea></p>
+            <p><label>대표 이미지 : </label><img id="preview" th:attr="mysrc=*{getBase64Image()}" src="/img/no_image.png" alt="Rest Image"></p>
+
+            <input type="button" value="수정" th:onclick="|location.href='@{/owner/updateRest}'|">
+            <input type="button" value="돌아가기" th:onclick="|location.href='@{/owner/home}'|">
+        </div>
+    </th:block>
+    <script src="/js/imglazy.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=05b2e13415dce5035c88d89a20185383&libraries=services"></script>
+    <script>
+
+        let mapContainer = document.getElementById("map"),
+            mapOption = {
+                center : new daum.maps.LatLng(35.86868025887658, 128.5987419727357),
+                level : 5
+            };
+
+        let map = new daum.maps.Map(mapContainer, mapOption);
+        let geocoder = new daum.maps.services.Geocoder();
+        let marker = new daum.maps.Marker({
+            position: new daum.maps.LatLng(35.86868025887658, 128.5987419727357),
+            map: map
+        });
+        let coords = new daum.maps.LatLng(35.86868025887658, 128.5987419727357);
+        map.relayout();
+        map.setCenter(coords);
+        marker.setPosition(coords)
+    </script>
+</th:block>
+</html>

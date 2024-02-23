@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{owner/myPage_layout}">
+
+<th:block th:fragment="content">
+    <ul>
+        <li>
+            <span>번호</span>
+            <span>제목</span>
+        </li>
+        <th:block th:each="event : ${eventList}">
+            <li>
+                <span>[[${event.getEventNo()}]]</span>
+                <span><a th:href="@{/owner/viewEvent/{eventNo}(eventNo=${event.getEventNo()})}">[[${event.getEventTitle()}]]</a></span>
+            </li>
+        </th:block>
+    </ul>
+</th:block>
+</html>

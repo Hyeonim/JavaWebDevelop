@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>가게 추가</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right" style="margin-right: 100px">
+
+        <style>
+            .container {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+
+        <h2>가게 추가</h2>
+        <hr>
+        <hr>
+
+
+
+        <div class="formDiv" style="width: 1000px">
+            <form id="form3" action="/manager/managerPage_JrestAdd" method="post" enctype="multipart/form-data"
+                  style="display: flex">
+
+                <div style="flex: 1; width: 300px; height: 400px; text-align: right; margin-right: 30px">
+                    <img id="preview" src="/images/rest.png" style="width: 300px; height: 400px; margin-right: 160px" alt="">
+                    <br>
+                    <input type="file" name="file" id="file" style="margin-right: 139px"><br>
+                </div>
+
+                <div style="flex: 1; width: 500px">
+<!--                <p><label>번호 </label><input type="text" name="restNo"></p>-->
+                <p><label>가게명 </label><input type="text" name="restName"></p>
+                <p><label>주소 </label><input type="text" name="restAddr"></p>
+                <p><label>전화번호 </label><input type="text" name="restTel"></p>
+                <p><label>좌석 수 </label><input type="text" name="restSeat"></p>
+                <p><label>영업 시간 </label><input type="text" name="restTime"></p>
+                <p><label>휴무 일정 </label><input type="text" name="restOffDays"></p>
+                <p><label>주차장 </label><input type="text" name="restParking"></p>
+                <p><label>메뉴 </label><input type="text" name="restMenu"></p>
+                <p><label>업태 </label><input type="text" name="restCategory"></p>
+                <p><label>위도 </label><input type="text" name="restLatitude"></p>
+                <p><label>경도 </label><input type="text" name="restLongitude"></p>
+<!--                <p><label>가게 이미지 : </label><input type="file" name="file"></p>-->
+                <p><label>평점 </label><input type="text" name="restScore"></p>
+                <p><label>소개글 </label><input type="text" name="restDescription"></p>
+                <!--        <label>가게 등록일 : <input type="text" name="restStartDate"></label><br>-->
+                </div>
+            </form>
+        </div>
+        <br><br>
+        <div class="container" style="text-align: center">
+            <button id="submit" class="fifth" type="submit">등록</button>
+            <button style="margin-left: 50px" onclick="history.go(-1);" class="fifth" id="backButton">이전</button>
+        </div>
+    </div>
+
+    <script>
+        // 파일 입력란의 변경 이벤트를 감지하여 이미지를 표시하는 함수
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('preview').setAttribute('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById('file').addEventListener('change', function () {
+            previewImage(this);
+        });
+
+        document.getElementById("submit").addEventListener("click", function (event) {
+            document.getElementById("form3").submit(); // 폼 제출
+        });
+    </script>
+</div>
+</html>

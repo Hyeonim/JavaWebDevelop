@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>블랙리스트 목록</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right3" style="margin-right: 100px">
+
+        <h1 style="margin-top: 100px">블랙 리스트 목록</h1>
+        <hr>
+        <input type="text" id="searchInput5" placeholder="블랙리스트 이름으로 검색" onchange="searchDinning5()">
+        <button onclick="searchDinning5()">검색</button>
+
+        <table id="blackTable" style="text-align: center;">
+            <thead>
+            <tr>
+                <th>no</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화번호</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.userNo}">Name</td>
+                <td th:text="${user.userId}">ID</td>
+                <td th:text="${user.userName}">Name</td>
+                <td th:text="${user.userEmail}">Name</td>
+                <td th:text="${user.userTel}">Name</td>
+                <!--                <td th:text="${user.userStartDate}">Name</td>-->
+                <td>
+                    <form action="managerPage_UBlack" method="get">
+                        <input type="hidden" name="userNo" th:value="${user.userNo}"></input>
+                        <input type="hidden" name="confirm" value="false"></input>
+                        <button type="submit" onclick="confirmBlack(this)" style="background-color: black;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;">블랙버튼
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+        function confirmBlack(my) {
+            let confirmation = confirm("블랙을 푸시겠습니까?");
+            let form = document.getElementById("blackForm");
+            let confirmInput = my.parentNode.querySelector("input[name=confirm]");
+            confirmInput.value = confirmation;
+
+            form.submit();
+
+        }
+
+    </script>
+
+
+
+</div>
+</html>

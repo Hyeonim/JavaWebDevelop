@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{userPage/Layout_userPage}">
+
+<th:block th:fragment="content">
+    <div class="formDiv">
+        <h1>답변 내용</h1>
+    <form>
+        <label>문의 번호:</label>
+        <input type="text" th:value="${QA.get().getId()}" readonly/><br>
+        <label>제목:</label>
+        <input type="text" th:value="${QA.get().getQaTitle()}" readonly/><br>
+        <label>내용:</label>
+        <input type="text" size="50px" th:value="${QA.get().getQaContent()}" readonly/><br>
+
+
+        <label>답변 내용:</label>
+        <textarea rows="5" cols="50" th:text="${QaAnswer.getAnswerContent()}" readonly></textarea><br>
+
+    </form>
+    </div>
+
+</th:block>
+</html>
+
+
+

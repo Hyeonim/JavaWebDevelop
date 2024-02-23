@@ -1,0 +1,185 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/" lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+<link th:href="@{/css/main.css}" rel="stylesheet">
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<head>
+    <style>
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        #c {
+            max-width: 800px;
+            margin: 20px auto 30px auto;
+            background-color: #fff;
+            /*padding: 20px;*/
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        #c #img {
+            max-width: 100%;
+            padding-top: 60px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        ion-icon {
+            vertical-align: middle;
+            font-size: 30px;
+            margin-right: 8px;
+        }
+
+        #c h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        #c p {
+            margin: 10px 0;
+            /*display: inline-block;*/
+            vertical-align: middle;
+        }
+
+        #c button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #c button:hover {
+            background-color: #45a049;
+        }
+        #c button.no {
+            background-color: #9f9f9f;
+            color:#ddd;
+        }
+        #c button.no:hover {
+            background-color: #9f9f9f;
+        }
+
+        #c #map {
+            width: 710px;
+            height: 360px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            margin-left: 40px;
+            margin-bottom: 40px;
+        }
+
+        #review {
+            margin-bottom: 40px;
+            height: auto;
+        }
+
+        .reviewT {
+            border-bottom: 2px solid black;
+            height: auto;
+            margin: 20px;
+            /*padding: 10px;*/
+        }
+
+        .reviewT img{
+
+            margin-bottom: 20px;
+
+        }
+
+        @media (max-width: 600px) {
+            /* Apply styles when the screen width is 600 pixels or less */
+            #c {
+                padding: 10px;
+            }
+        }
+
+
+
+
+        .f {
+            /*border: solid 1px black;*/
+            text-align: center;
+            height: 10px;
+            position: relative;
+            transform: translateY(0%);
+        }
+
+        #img-cont {
+            width: 710px;
+            height: 400px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        #img-cont img {
+            width: 710px;
+            height: 710px;
+            margin-top:-200px;
+            align-items: center;
+        }
+
+
+        #c {
+            height: auto;
+            text-align: center;
+        }
+
+        .reviewT img{
+            width:238px;
+            height:238px;
+        }
+
+    </style>
+
+</head>
+<body>
+<header th:include="~{/include/header::headerFragment}">
+    head
+</header>
+
+
+<div th:include="~{/include/detail_content::detailContent}">
+    head
+</div>
+
+
+<footer th:include="~{/include/footer::footerFragment}">
+    footer
+</footer>
+
+<script th:inline="javascript">
+    let map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng([[${dinning.restLatitude}]], [[${dinning.restLongitude}]]),
+        zoom: 17
+    })
+    let marker = null;
+    let markers = [];
+
+
+    marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng([[${dinning.restLatitude}]], [[${dinning.restLongitude}]]),
+        map: map
+    })
+
+
+    marker.setMap(map);
+
+
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,600 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{userPage/Layout_userPage2}">
+
+
+<th:block th:fragment="content">
+    <!--    <link th:href="@{/css/userPage/starRank.css}" rel="stylesheet">-->
+
+
+    <style>
+
+        #posts_main {
+            position: absolute;
+            display: flex;
+            /*justify-content: center;*/
+            /*align-items: center;*/
+            /*left: 650px;*/
+            top: 410px;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .container1 {
+            display: flex;
+            padding: 15px;
+            padding-bottom: 15px;
+            /*padding-bottom: 435px;*/
+            background: #fff;
+            border: 1.6px solid #dddddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            margin-top: 60px;
+            transition: padding-bottom 0.5s ease-in-out; /* 애니메이션을 추가합니다. */
+        }
+
+        .left {
+            background-color: gray;
+            display: inline-block;
+            width: 300px;
+            height: 221px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .left2 {
+            /*background-color: gray;*/
+            display: inline-block;
+            width: 300px;
+            height: 221px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .right {
+            width: 447px;
+            margin-left: 14px;
+            text-align: center;
+        }
+
+        hr {
+            display: block;
+            unicode-bidi: isolate;
+            margin-block-start: 0.5em;
+            margin-block-end: 0.5em;
+            margin-inline-start: auto;
+            margin-inline-end: auto;
+            overflow: hidden;
+            border-style: inset;
+            border-width: 1px;
+        }
+
+        .grayBtn {
+            background-color: gray;
+            color: white;
+            width: 26%;
+            height: 36px;
+            border: none;
+            font-size: 15px;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            margin-left: -5px;
+            margin-top: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .yellowBtn {
+            background-color: rgb(215 215 42 / 70%);
+            color: white;
+            width: 26%;
+            height: 36px;
+            border: none;
+            font-size: 15px;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            margin-left: -5px;
+            margin-top: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .greenBtn {
+            background-color: rgba(42, 215, 82, 0.7);
+            color: white;
+            width: 26%;
+            height: 36px;
+            border: none;
+            font-size: 15px;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            margin-left: -5px;
+            margin-top: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .reviewBtn {
+            margin-left: -10px;
+            width: 50%;
+            height: 36px;
+            border: none;
+            font-size: 15px;
+            line-height: 36px;
+            color: #fff;
+            background-color: rgba(0, 119, 255, 0.66);
+            text-align: center;
+            cursor: pointer;
+            margin-top: 18px;
+            font-weight: bold;
+            margin-left: 0px;
+        }
+
+        .reviewBtn.expanded {
+            display: none;
+        }
+
+
+        .reviewBtn2 {
+            margin-left: -10px;
+            width: 50%;
+            height: 36px;
+            border: none;
+            font-size: 15px;
+            line-height: 36px;
+            color: #fff;
+            background-color: rgba(0, 119, 255, 0.66);
+            text-align: center;
+            cursor: pointer;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        .reviewAddBtn {
+            margin-left: -10px;
+            width: 50%;
+            height: 36px;
+            border: none;
+            font-size: 15px;
+            line-height: 36px;
+            color: #fff;
+            background-color: rgba(0, 119, 255, 0.66);
+            text-align: center;
+            cursor: pointer;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        .reviewBtnComplete {
+            margin-left: -10px;
+            width: 50%;
+            height: 36px;
+            border: none;
+            font-size: 15px;
+            line-height: 36px;
+            color: #fff;
+            /*background-color: rgb(112 102 245);*/
+            background-color: gray;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        .filter {
+            filter: grayscale(100%);
+        }
+
+        .mypage_sidebar_nav {
+            color: gray;
+        }
+
+        #postsSelect {
+            font-weight: bold;
+            color: black;
+            border-bottom: 2px solid black;
+        }
+
+        /*.writeRev {*/
+        /*    display: flex;*/
+        /*    padding: 15px;*/
+        /*    background: #fff;*/
+        /*    border: 1.6px solid #dddddd;*/
+        /*    border-radius: 4px;*/
+        /*    box-sizing: border-box;*/
+        /*    margin-bottom: 15px;*/
+        /*    margin-top: 60px;*/
+        /*}*/
+
+        .mid {
+            border-top: 1.6px solid #dddddd;
+            width: 96%;
+            margin-bottom: 169px;
+            align-items: center;
+            flex-direction: column;
+            margin-top: -679px;
+            margin-left: 15px;
+            display: none;
+        }
+
+        .containers.expanded .mid {
+            display: block;
+        }
+
+    </style>
+
+    <style>
+        /* 레이아웃 외곽 너비 400px 제한*/
+        .wrap1 {
+            max-width: 480px;
+            margin: 0 auto; /* 화면 가운데로 */
+            /*background-color: #ababab;*/
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+
+        }
+
+        /*.rating .rate_radio {*/
+        /*    z-index: 20;*/
+        /*    opacity: 0.1;*/
+        /*    width: 60px;*/
+        /*    height: 60px;*/
+        /*    background-color: #a19f9f;*/
+        /*    cursor: pointer;*/
+        /*    !*vertical-align: top;*!*/
+        /*    left: -100px;*/
+        /*    position: absolute;*/
+        /*}*/
+
+        #rating1 {
+            position: absolute;
+            left: 387px;
+            opacity: 0.001;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            z-index: 20;
+
+        }
+
+        #rating2 {
+            position: absolute;
+            left: 447px;
+            opacity: 0.001;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            z-index: 20;
+
+        }
+
+        #rating3 {
+            position: absolute;
+            left: 507px;
+            opacity: 0.001;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            z-index: 20;
+
+        }
+
+        #rating4 {
+            position: absolute;
+            left: 567px;
+            opacity: 0.001;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            z-index: 20;
+
+        }
+
+        #rating5 {
+            position: absolute;
+            left: 627px;
+            opacity: 0.001;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        .rating .rate_radio + label {
+            /*border: 0.5px solid gray;*/
+            position: relative;
+            display: block;
+            float: left;
+            z-index: 10;
+            width: 60px;
+            height: 60px;
+            background-image: url("/img/starrate.png");
+            background-repeat: no-repeat;
+            background-size: 60px 60px;
+            cursor: pointer;
+        }
+
+        .rating .ratefillYellow {
+            background-color: #ff8;
+            height: 60px;
+            position: absolute;
+            width: 60px; /* 초기에는 0으로 설정 */
+            transition: width 0.3s; /* 너비가 변경될 때 애니메이션을 추가합니다. */
+            z-index: 9;
+        }
+
+        .rating .ratefillGray {
+            position: absolute;
+            background-color: gray;
+            height: 60px;
+            width: 300px;
+            z-index: 1;
+        }
+    </style>
+
+    <div style="display: flex; justify-content: center; margin-bottom: 10px">
+        <div id="posts_main">
+
+            <div id="wrap" class="containers" th:each="res : ${list}">
+
+                <div id="container1" class="container1" style="display: flex">
+                    <div class="left">
+                        <img th:attr="mysrc=${res.restNo.getBase64Image()}"
+                             th:class="${res.getReservationStatusEnum.getName()} == '대기' or ${res.getReservationStatusEnum.getName()} == '예약완료' ? 'disabled-filter' : 'filter'"
+                             style="width: 300px; height: 221px; border-radius: 10px;">
+                    </div>
+                    <div class="right">
+                        <p class="gray-text p-right"
+                           th:style="${res.getReservationStatusEnum.getName()} == '이용완료' or ${res.getReservationStatusEnum.getName()} == '예약거절' or ${res.getReservationStatusEnum.getName()} == '노쇼' or ${res.getReservationStatusEnum.getName()} == '취소됨' or ${res.getReservationStatusEnum().getName()} == '리뷰작성완료' ? 'color: gray;' : 'color: black;'">
+                            <b style="font-size: 20px;" th:text="${res.restNo.restName}"></b><br>
+                            <b th:text="${res.restNo.restCategory}"></b><br>
+                            <b th:text="${res.resTime}"></b><br>
+                        <hr>
+                        <div><b th:text="'예약 인원 : ' + ${res.res_guest_count}"
+                                th:style="${res.getReservationStatusEnum.getName()} == '이용완료' or ${res.getReservationStatusEnum.getName()} == '예약거절' or ${res.getReservationStatusEnum.getName()} == '노쇼' or ${res.getReservationStatusEnum.getName()} == '취소됨' or ${res.getReservationStatusEnum().getName()} == '리뷰작성완료' ? 'color: gray;' : 'color: black;'"></b>
+                        </div>
+                        <br>
+                        <b th:text="${res.restNo.restAddr}"
+                           th:style="${res.getReservationStatusEnum.getName()} == '이용완료' or ${res.getReservationStatusEnum.getName()} == '예약거절' or ${res.getReservationStatusEnum.getName()} == '노쇼' or ${res.getReservationStatusEnum.getName()} == '취소됨' or ${res.getReservationStatusEnum().getName()} == '리뷰작성완료' ? 'color: gray;' : 'color: black;'"></b><br>
+                        <button id="cancelBtn1"
+                                th:if="${res.getReservationStatusEnum.getName() != '리뷰작성완료'}"
+                                th:class="${res.getReservationStatusEnum.getName() == '대기' ? 'yellowBtn' : (res.getReservationStatusEnum.getName() == '예약완료' ? 'greenBtn' : 'grayBtn')}"
+                                th:text="${res.getReservationStatusEnum.getName()}">
+                        </button>
+                        <button id="reviewBtn" class="reviewBtn"
+                                th:if="${res.getReservationStatusEnum.getName() eq '이용완료' and revStatus ne 'OK'}">리뷰작성
+                        </button>
+                        <button id="reviewCompleteBtn" class="reviewBtnComplete"
+                                th:if="${res.getReservationStatusEnum.getName() eq '리뷰작성완료'}">리뷰작성완료
+                        </button>
+                        <button id="reviewBtn2" class="reviewBtn2"
+                                th:if="${res.getReservationStatusEnum.getName() eq '이용완료'}" style="display: none">작성취소
+                        </button>
+                    </div>
+                </div>
+                <div class="mid">
+                    <div style="padding: 33px">
+                        <div style="display: flex; justify-content: flex-start; flex-direction: column; margin-right: 1px; height: 412px">
+                            <input type="hidden" name="rate" id="rate" value="0"/>
+                            <p class="title_star">별점과 이용경험을 남겨주세요.</p>
+
+                            <form id="addRevForm" action="/user/submitReview" method="post"
+                                  enctype="multipart/form-data">
+                                <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <label for="file">이미지:</label><br>
+                                        <img style="width: 200px; height: 180px; border: 1.6px solid #dddddd; background-size: cover;"
+                                             id="preview" src="#" alt="">
+                                        <br>
+                                        <input type="file" id="file" name="file">
+                                    </div>
+
+                                    <div class="rating">
+                                        <div class="ratefillGray"></div>
+                                        <div class="ratefillYellow"></div>
+                                        <input type="radio" name="revScore" id="rating1" value="10" class="rate_radio"
+                                               title="1점">
+                                        <label for="rating1"></label>
+                                        <input type="radio" name="revScore" id="rating2" value="20" class="rate_radio"
+                                               title="2점">
+                                        <label for="rating2"></label>
+                                        <input type="radio" name="revScore" id="rating3" value="30" class="rate_radio"
+                                               title="3점">
+                                        <label for="rating3"></label>
+                                        <input type="radio" name="revScore" id="rating4" value="40" class="rate_radio"
+                                               title="4점">
+                                        <label for="rating4"></label>
+                                        <input type="radio" name="revScore" id="rating5" value="50" class="rate_radio"
+                                               title="5점">
+                                        <label for="rating5"></label>
+                                        <input type="hidden" id="selectedRevScore" name="selectedRevScore" value="">
+                                    </div>
+                                    <br>
+
+                                </div>
+                                <hr>
+                                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('[name="revScore"]').on('click', function () {
+                                            let ratingValue = $(this).val();
+                                            let selectedRevScore = document.querySelectorAll('.selectedRevScore')
+                                            let fillWidth = ratingValue * 6;
+
+                                            $('.ratefillYellow').css('width', fillWidth + 'px');
+
+                                            console.log('Selected Rating:', selectedRevScore.values());
+
+
+                                            // 선택된 별점 값을 hidden input 필드에 설정
+                                            $('#selectedRevScore').val(ratingValue);
+                                        });
+
+                                        // 리뷰 제출 버튼 클릭 시 hidden input 필드의 값을 확인
+                                        $('#revAdd').on('click', function () {
+                                            if ($('#selectedRevScore').val() === "") {
+                                                alert("별점을 선택해주세요."); // 또는 원하는 처리를 수행
+                                                return false; // 폼 전송 중단
+                                            }
+                                        });
+                                    });
+                                </script>
+
+                                <div style="margin-top: 53px">
+                                    <label>식당 이름:</label>
+                                    <div th:text="${res.getRestNo().restName}"></div>
+                                    <input th:if="${not #strings.isEmpty(res.res_no)}" th:value="${res.res_no}"
+                                           name="resNo" th:hidden="true"/>
+                                    <input th:value="${res.getRestNo().restNo}" name="restNo" th:hidden="true"/>
+                                </div>
+                                <hr>
+                                <div style="margin-top: 30px">
+                                    <textarea id="reviewContent" name="revContent" rows="5" cols="82"
+                                              style="resize: none;"></textarea>
+                                </div>
+                                <button id="revAdd" class="reviewAddBtn" type="submit"
+                                        style="margin-top: 54px; position: relative; left: -37px; width: 114%;">리뷰 제출
+                                </button>
+                            </form>
+                            <script>
+                                function previewImage(input) {
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+
+                                        reader.onload = function (e) {
+                                            input.parentNode.querySelector("#preview").setAttribute('src', e.target.result);
+                                        }
+
+                                        reader.readAsDataURL(input.files[0]);
+                                    }
+                                }
+
+                                document.querySelectorAll('#file').forEach(e => e.addEventListener('change', function () {
+                                    previewImage(e);
+                                }));
+
+                                document.getElementById("revAdd").addEventListener("click", function (event) {
+                                    document.getElementById("addRevForm").submit(); // 폼 제출
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container1" th:if="${list == null or #lists.isEmpty(list)}">
+                <div class="left">
+                </div>
+                <div class="right">
+                    <p class="gary-text p-right" style="color: gray;">
+                        <b style="font-size: 20px;">현재 이용 중인 가게가 없습니다.</b><br>
+                    <hr>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        gv = [];
+        document.addEventListener('DOMContentLoaded', function () {
+            var reviewBtns = document.querySelectorAll('.reviewBtn');
+            var reviewBtns2 = document.querySelectorAll('.reviewBtn2');
+
+            reviewBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var confirmation = window.confirm('리뷰를 작성하시겠습니까?');
+
+                    if (confirmation) {
+                        let container1 = this.closest('.container1');
+                        var container2 = this.closest('.containers');
+
+                        if (container1) {
+                            container1.style.paddingBottom = '689px';
+
+                            let container1ById = document.getElementById('container1');
+                            console.log('container1ById:', container1ById);
+
+                            let reviewBtn = container1.querySelector('#reviewBtn');
+                            console.log('reviewBtn:', reviewBtn);
+                            if (reviewBtn) {
+                                reviewBtn.style.display = 'none';
+                            }
+
+                            let cancelBtn1 = container1.querySelector('#cancelBtn1');
+                            if (cancelBtn1) {
+                                cancelBtn1.style.display = 'none';
+                            }
+
+                            let reviewBtn2 = container1.querySelector('#reviewBtn2');
+                            if (reviewBtn2) {
+                                reviewBtn2.style.display = '';
+                            }
+                        }
+
+                        if (container2) {
+                            var delay = 400;
+
+                            setTimeout(function () {
+                                container2.classList.toggle('expanded');
+                                console.log('리뷰 작성 버튼이 눌렸습니다.');
+                            }, delay);
+                        }
+                    } else {
+                        console.log('리뷰 작성이 취소되었습니다.');
+                    }
+                });
+            });
+            reviewBtns2.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var confirmation = window.confirm('리뷰를 작성을 취소하시겠습니까?');
+                    if (confirmation) {
+                        let container1 = this.closest('.container1');
+                        var container2 = this.closest('.containers');
+
+                        if (container1) {
+                            container1.style.paddingBottom = '15px';
+
+                            let container1ById = document.getElementById('container1');
+                            console.log('container1ById:', container1ById);
+
+                            let reviewBtn = container1.querySelector('#reviewBtn');
+                            console.log('reviewBtn:', reviewBtn);
+                            if (reviewBtn) {
+                                reviewBtn.style.display = '';
+                            }
+
+                            let cancelBtn1 = container1.querySelector('#cancelBtn1');
+                            if (cancelBtn1) {
+                                cancelBtn1.style.display = '';
+                            }
+
+                            let reviewBtn2 = container1.querySelector('#reviewBtn2');
+                            if (reviewBtn2) {
+                                reviewBtn2.style.display = 'none';
+                            }
+                        }
+
+                        if (container2) {
+                            var delay = 100;
+
+                            setTimeout(function () {
+                                container2.classList.remove('expanded');
+                            }, delay);
+                        }
+                    } else {
+                    }
+                })
+            })
+        });
+
+
+    </script>
+    <script src="/js/imglazy.js"></script>
+</th:block>
+</html>

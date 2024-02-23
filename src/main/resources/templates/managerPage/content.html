@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org/"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!--<link rel="stylesheet" href="../../static/css/main.css">-->
+<div th:fragment="managerContent">
+    <div id="right" style="margin-right:90px; margin-top: -88px">
+        <h2>DASH BOARD</h2>
+        <div style="display: flex; margin-top: 10px">
+            <div>
+                <a href="managerPage_QA">
+                    <ion-icon id="alarm" name="mail-unread-outline"
+                              style="font-size: 45px; margin-right: 13px"></ion-icon>
+                </a>
+            </div>
+            <div>
+                <a href="managerPage_QA">
+                    <span th:text="'전체 문의 : ' + ${qa.size()}"></span><br>
+                    <span th:text="'미 답변 문의 : ' + ${unansweredCount}"></span>
+                </a>
+            </div>
+        </div>
+
+        <div id="main-box" class="main-box">
+            <div class="box-header">
+                <h2 th:text="'전체 회원 현황: ' + ${uList.size()} +' 명'"></h2>
+            </div>
+            <div class="box-content">
+                <div class="chart-container" style="margin-left: 200px">
+                    <canvas id="userChart" class="chart"></canvas>
+                </div>
+                <div class="chart-container" style="margin-right: 200px">
+                    <canvas id="userBarChart" class="chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-box2" class="main-box">
+            <div class="box-header">
+                <h2 th:text="'전체 가게 현황: ' + ${dList.size()} + ' 개'"></h2>
+            </div>
+            <div class="box-content" style="margin-left: 200px">
+                <div class="chart-container">
+                    <canvas id="dinningChart" class="chart"></canvas>
+                </div>
+                <div class="chart-container" style="margin-right: 200px">
+                    <canvas id="dinningBarChart" class="chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2>방문자 통계 집계? x,y축 있는 점선으로 이어진 그래프</h2>
+        </div>
+
+
+    </div>
+</div>
+
+</html>
+
+

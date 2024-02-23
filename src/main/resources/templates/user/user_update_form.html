@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/user/update_user/{userNo}(userNo=${user.get().getUserNo()})}" method="post" enctype="multipart/form-data">
+    <label>유저 번호:</label>
+    <input type="text" th:value="${user.get().getUserNo()}" readonly name="userNo"/><br>
+    <label>ID:</label>
+    <input type="text" th:value="${user.get().getUserId()}" name="userId"/><br>
+    <label>이름:</label>
+    <input type="text" th:value="${user.get().getUserName()}" name="userName"/><br>
+    <label>이메일:</label>
+    <input type="text" th:value="${user.get().getUserEmail()}" name="userEmail"/><br>
+    <label>전화번호:</label>
+    <input type="text" th:value="${user.get().getUserTel()}" name="userTel"/><br>
+    <label>이미지:</label><br>
+    <input type="text" name="name"><br>
+    <input type="file" name="file">
+
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
+
+
+

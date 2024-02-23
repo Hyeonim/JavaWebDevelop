@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{owner/myPage_layout}">
+<th:block th:fragment="content">
+
+    <div style="display: inline; justify-content: space-between">
+        <div class="main-box" style="width:30%;">
+            <div class="box-header">
+                <h2>금일([[${today}]]) 예약 건 수</h2>
+            </div>
+            <div class="box-content">
+                <ion-icon name="checkmark-circle-outline"></ion-icon><span>[[${complete}]] 건</span>
+            </div>
+        </div>
+
+        <div class="main-box" style="width:30%;">
+            <div class="box-header">
+                <h2>금일([[${today}]]) 취소 건 수</h2>
+            </div>
+            <div class="box-content">
+                <ion-icon name="checkmark-circle-outline"></ion-icon><span>[[${cancel}]] 건</span>
+            </div>
+        </div>
+    </div>
+    <div class="main-box">
+        <div class="box-header">
+            <h2>시간별 예약 현황</h2>
+        </div>
+        <div class="box-content">
+            <div class="chart-content"
+                 style="
+                 display: flex;
+                 justify-content: flex-start;
+                 align-items: center;
+                 padding: 20px 0;
+                 width: 60%;
+                 ">
+                <canvas id="reserveBarChart" class="chart" width="258" height="129" style="display: block; box-sizing: border-box; height: 129px; width: 258px;"></canvas>
+            </div>
+            <div class="chart-content"
+                 style="
+             display: flex;
+             justify-content: flex-start;
+             align-items: center;
+             padding: 20px 0;
+             width: 30%;
+             ">
+                <canvas id="reserveChart" class="chart" width="258" height="258" style="display: block; box-sizing: border-box; height: 258px; width: 258px;"></canvas>
+            </div>
+        </div>
+    </div>
+    <li>주간 방문자 통계</li>
+    <li>방문자 유형 통계</li>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+    function drawGraph() {
+        if ( ![[${drawGraph}]])
+            return;
+        let barLabel = [];
+        let doughnutLabel = [];
+        let barDataList = [];
+        let doughnutDataList = [];
+
+        [# th:if="${reserveStat != null}"]
+        [# th:each = "entry : ${reserveStat.entrySet()}"]
+        if([[${entry.value}]]) {
+            barLabel.push([[${entry.key}]])
+            doughnutLabel.push([[${entry.key}]])
+            barDataList.push([[${entry.value}]])
+            doughnutDataList.push([[${entry.value}]])
+        } else {
+            barLabel.push([[${entry.key}]])
+            barDataList.push([[${entry.value}]])
+
+        }
+        [/][/]
+
+        let barData = {
+            labels: barLabel,
+            datasets: [{
+                label: '시간별 예약 통계',
+                data: barDataList,
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(54, 102, 235, 0.5)',
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(52, 191, 182, 0.5)',
+                    'rgba(255, 159, 64, 0.5)',
+                    'rgba(75, 192, 192, 0.5)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        let doughnutData = {
+            labels: doughnutLabel,
+            datasets: [{
+                label: '시간별 예약 통계',
+                data: doughnutDataList,
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(54, 102, 235, 0.5)',
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(52, 191, 182, 0.5)',
+                    'rgba(255, 159, 64, 0.5)',
+                    'rgba(75, 192, 192, 0.5)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // -------------------------------도넛 그래프--------------------------------
+        let reserveCtx = document.getElementById('reserveChart').getContext('2d');
+        // -------------------------------막대 그래프--------------------------------
+        let reserveCtx2 = document.getElementById('reserveBarChart').getContext('2d');
+
+        [[reserveCtx, 'doughnut', doughnutData], [reserveCtx2, 'bar', barData]
+        ].forEach(elem => {
+            new Chart(elem[0], {
+                type: elem[1],
+                data: elem[2],
+                options: {}
+            });
+        });
+    }drawGraph();
+
+</script>
+</th:block>
+</html>

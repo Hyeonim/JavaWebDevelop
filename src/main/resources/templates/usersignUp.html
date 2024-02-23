@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultrang.net.nz/thymeleaf/layout">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>개인 회원가입</title>
+    <link rel="stylesheet" href="/css/formdiv.css">
+    <style>
+        ul, li {
+            list-style-type: none;
+        }
+        div#step1 div {
+            display: inline-block;
+            margin: 0px 0px 1px 40px;
+        }
+        div#step1 > div{
+            display: flex;
+            justify-content: center;
+        }
+        div#step1 span {
+            border-radius: 42px;
+            /*border: 1px solid black;*/
+            background: rgb(255, 110, 0);
+            width: 40px;
+            height: 40px;
+            padding: 12px 8px 12px 14px;
+            display: inline-block;
+        }
+        div#step1 span:hover
+        {
+            background: rgb(255 110 0 / 63%);
+        }
+        div#step1 p {
+            text-align: center;
+        }
+        div#step1 div p {
+            transform: translateX(-50%);
+            position: relative;
+            left: -5px;
+            margin: 6px 38px;
+        }
+        div#step2>div{
+            display: flex;
+            flex-wrap:wrap;
+            justify-content:center;
+        }
+        div#step2 p {
+            width: 100%;
+        }
+        .eHgXSG {
+            width: 450px;
+            height: 120px;
+            background-color: #eee;
+            border: 1px solid rgb(186,186,186);
+            margin: 0 auto 30px;
+            padding: 5px 15px;
+            overflow-y: scroll;
+            text-align: left;
+            font-size: 14px;
+            border-radius:10px;
+        }
+        .eHgXSG::-webkit-scrollbar {
+            /*width: 10px;*/
+        }
+        .eHgXSG::-webkit-scrollbar-track {
+            /*margin-right: 20px;*/
+        }
+        .dWUEBt input[type='checkbox'] {
+            margin-top: 1px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 1px solid rgb(255, 110, 0);
+            border-radius: 50%;
+            cursor: pointer;
+            height: 30px;
+            outline: 0;
+            width: 30px;
+        }
+        .dWUEBt input[type='checkbox']:checked {
+            background: rgb(255, 110, 0);
+            border: rgb(255, 110, 0);
+        }
+        .dWUEBt input[type='checkbox']:checked::after {
+            display: block;
+        }
+        .dWUEBt input[type='checkbox']::after {
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            content: '';
+            display: none;
+            height: 40%;
+            left: 35%;
+            position: relative;
+            top: 19%;
+            transform: rotate(45deg);
+            width: 15%;
+        }
+        div#step2 .jqDOvc, div#step2 .dWUEBt  {
+            display: flex;
+        }
+        /*div#step2>div>div {*/
+        /*    display: flex;*/
+        /*}*/
+        div#step2>div>div>div>div{
+            display: flex;
+            align-items: center;
+        }
+        .step button {
+            width: 500px;
+            margin: 20px auto 10px auto;
+            padding: 15px 20px;
+            background: rgb(255, 110, 0);
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            border-radius : 10px;
+        }
+        .step button:disabled {
+            background: rgb(186,186,186);
+            cursor: default;
+        }
+        .gKXTsx {
+            display: flex;
+        }
+
+        div.step {
+            display: none;
+            width: 718px;
+            border: 1px solid #eee;
+        }
+        div#step1 {
+            display: block;
+        }
+        #step3>div {
+            justify-content: center;
+            margin: 0 auto;
+            width: 500px;
+            text-align: center;
+        }
+        #step4>div {
+            display: flex;
+            justify-content: center;
+        }
+        #step4 form .req {
+            color:red;
+        }
+        a {
+            text-decoration: none;
+        }
+        body {
+            width: 472px;
+            /* text-align: center; */
+            margin: 5% auto 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .ejGvhi {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 550px;
+            margin: 40px auto 10px;
+            text-align: center;
+            color: rgb(150, 150, 150);
+        }
+        .ejGvhi .userId, .ejGvhi .certification {
+            color: rgb(255, 110, 0);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div><h1><span th:replace="~{/include/logo::logoContent(30, 'no')}"></span>로고</h1></div>
+
+<div>
+<!--<h2>개인 신규 회원가입하기</h2>-->
+    <div class="sc-eVAmPc ejGvhi">
+        <span class="userId" onclick="jumpStep(this)">1. 유형선택</span>
+        <span class="" onclick="jumpStep(this)">2. 약관동의</span>
+        <span class="" onclick="jumpStep(this)">3. 인증</span>
+        <span class="" onclick="jumpStep(this)">4. 정보입력</span>
+    </div>
+</div>
+
+<div id="step1" class="step">
+    <p>회원 유형에 따라 가입 절차가 다르니 고객님께 해당하는 유형을 선택하여 주시기 바랍니다.</p>
+
+    <div>
+    <div class="type">
+    <span>
+        <svg stroke="white" fill="white" stroke-width="0" viewBox="0 0 1024 1024" height="33px" width="33px" xmlns="http://www.w3.org/2000/svg"><path d="M858.5 763.6a374 374 0 0 0-80.6-119.5 375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 0 0 8-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path></svg>
+    </span>
+        <p>개인 회원</p>
+        </div>
+    <div class="type">
+    <span>
+        <svg stroke="white" fill="white" stroke-width="0" viewBox="0 0 1024 1024" height="33px" width="33px" xmlns="http://www.w3.org/2000/svg"><path d="M296 250c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H296zm184 144H296c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8zm-48 458H208V148h560v320c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V108c0-17.7-14.3-32-32-32H168c-17.7 0-32 14.3-32 32v784c0 17.7 14.3 32 32 32h264c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm440-88H728v-36.6c46.3-13.8 80-56.6 80-107.4 0-61.9-50.1-112-112-112s-112 50.1-112 112c0 50.7 33.7 93.6 80 107.4V764H520c-8.8 0-16 7.2-16 16v152c0 8.8 7.2 16 16 16h352c8.8 0 16-7.2 16-16V780c0-8.8-7.2-16-16-16zM646 620c0-27.6 22.4-50 50-50s50 22.4 50 50-22.4 50-50 50-50-22.4-50-50zm180 266H566v-60h260v60z"></path></svg>
+    </span>
+        <p>기업 회원</p>
+    </div>
+    </div>
+
+</div>
+<div id="step2" class="step">
+    <div>
+    <p></p>
+    <div class="sc-jtrUWv">
+        <div class="sc-kjokSJ dWUEBt"><input type="checkbox" name="all">
+            <div class="sc-elITqc jqDOvc"><div style="margin-left: 12px; font-size: 20px;">전체동의하기</div>
+            </div>
+        </div>
+        <div class="infos">위치정보이용약관(선택), 이벤트・혜택 정보 수신(선택) 동의를 포함합니다.</div>
+        <div class="sc-kjokSJ dWUEBt"><input type="checkbox" name="tos">
+            <div class="sc-elITqc jqDOvc">
+                <div class="required">[필수]</div> <div>이용약관 동의</div><div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M6.23 20.23L8 22l10-10L8 2 6.23 3.77 14.46 12z"></path></svg></div></div></div>
+        <div class="sc-cLVjUO eHgXSG"><div>이용약관</div><div>제1조 </div><p>본 약관은 회원이 펫프렌즈가 제공하는 서비스를 이용함에 있어 펫프렌즈와 회원간의 권리, 의무 및 책임사항을 정함을 목적으로 합니다.</p><div>제2조</div><p>(용어 정의) "펫프렌즈"라 함은 펫프렌즈을 의미합니다. "서비스"라 함은 펫프렌즈가 제공하는 [서비스명] 등의 서비스를 의미합니다. "회원"이라 함은 본 약관에 동의하고 펫프렌즈와 서비스 이용 계약을 체결한 자를 의미합니다. "아이디(ID)"라 함은 회원의 식별과 서비스 이용을 위해 회원이 정하고 펫프렌즈가 승인하는 문자, 숫자 또는 기호의 조합을 의미합니다.</p><div>제3조</div><p>(약관의 효력과 변경) 본 약관은 회원이 이를 동의하고 펫프렌즈가 제공하는 서비스를 이용함으로써 효력이 발생합니다. 펫프렌즈는 필요한 경우 약관을 변경할 수 있으며, 변경된 약관은 회원에게 공지함으로써 효력이 발생합니다.</p><div> 제4조</div><p>(회원 가입 및 계정 관리) 회원 가입은 회원이 약관에 동의한 후 펫프렌즈가 제공하는 회원 가입 양식을 작성하여 회원으로 등록함으로써 완료됩니다. 회원은 자신의 아이디와 비밀번호를 관리하고 이에 대한 책임을 부담합니다. 회원은 자신의 개인정보를 최신 및 정확하게 유지해야 합니다.</p><div>제5조</div><p>(서비스 이용) 회원은 펫프렌즈가 제공하는 서비스를 이용할 수 있습니다. 회원은 서비스 이용 시 관련 법령, 약관 및 이용 규정을 준수해야 합니다. 회원은 서비스 이용 중 다른 회원에게 피해를 주거나 서비스 운영에 지장을 초래하는 행위를 해서는 안 됩니다. 제6조 (서비스의 변경, 중단) 펫프렌즈는 운영상, 기술상 필요한 경우 서비스의 일부 또는 전부를 변경, 중단할 수 있습니다. 펫프렌즈는 서비스의 변경, 중단에 대해 회원에게 사전 공지를 할 수 있습니다.</p></div>
+        <div class="sc-kjokSJ dWUEBt"><input type="checkbox" name="privacy">
+            <div class="sc-elITqc jqDOvc">
+                <div class="required">[필수]</div> <div>개인정보 동의</div><div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M6.23 20.23L8 22l10-10L8 2 6.23 3.77 14.46 12z"></path></svg></div></div></div>
+        <div class="sc-cLVjUO eHgXSG"><div>개인정보 처리방침</div><div> 1. 개인정보의 처리 목적</div><p>펫프렌즈은 [서비스명] 제공을 위해 아래와 같은 목적으로 개인정보를 처리합니다: 회원 가입 및 관리 서비스 제공 및 운영 계약 이행 및 관리 고객 문의 및 응대 서비스 개선 및 개발 마케팅 및 광고 활동</p><div>2. 수집하는 개인정보 항목</div><p>펫프렌즈은 서비스 제공 및 운영을 위해 아래와 같은 개인정보를 수집할 수 있습니다: 신규 회원 가입 시: 이름, 이메일 주소, 비밀번호 등 서비스 이용 과정에서 자동 수집: IP 주소, 쿠키 정보, 서비스 이용 기록 등 고객 문의 및 응대 시: 이름, 연락처, 문의 내용 등</p><div>3. 개인정보의 보유 및 이용 기간</div><p>펫프렌즈은 회원의 개인정보를 원칙적으로 개인정보 수집 및 이용목적이 달성되면 지체 없이 파기합니다. 다만, 아래의 경우에는 해당 기간 동안 개인정보를 보유할 수 있습니다: 관련 법령에 의한 정보 보유 기간 회원 탈퇴 후 회원의 요청에 따른 개인정보 보유</p><div> 4. 개인정보의 제공 및 공유</div><p>펫프렌즈은 회원의 개인정보를 원칙적으로 외부에 제공하지 않습니다. 다만, 아래의 경우에는 예외적으로 개인정보를 제공할 수 있습니다: 회원의 동의가 있는 경우 법령에 의해 요구되는 경우</p><div> 5. 개인정보의 파기</div><p>펫프렌즈은 개인정보 보유기간이 경과하거나 개인정보의 처리 목적이 달성되면 지체 없이 개인정보를 파기합니다. 파기 절차 및 방법은 정책에 따라 다를 수 있습니다.</p></div>
+        <div class="sc-kjokSJ dWUEBt"><input type="checkbox" name="location"><div class="sc-elITqc jqDOvc"><div>[선택]</div> <div>위치정보 동의</div><div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M6.23 20.23L8 22l10-10L8 2 6.23 3.77 14.46 12z"></path></svg></div></div></div>
+        <div class="sc-cLVjUO eHgXSG"><div>위치정보 수집에 대한 동의 </div><p>펫프렌즈는 [서비스명] 제공을 위해 회원의 위치정보를 수집할 수 있습니다. 아래와 같은 내용에 동의함으로써 위치정보 수집에 대한 동의를 하게 됩니다.</p><div> 1. 위치정보의 수집 및 이용 목적</div><p>펫프렌즈는 위치정보를 수집하고 이용함으로써 다음과 같은 목적을 달성합니다: [서비스명]의 정확한 위치 기반 서비스 제공 광고 및 마케팅 활동의 타겟팅 및 개인화</p><div> 2. 수집하는 위치정보 항목</div><p>펫프렌즈는 아래와 같은 위치정보 항목을 수집할 수 있습니다: 현재 위치 좌표 (위도, 경도) 이용 기기의 IP 주소 기기 설정에서 수집한 위치정보</p><div> 3. 위치정보의 보유 및 이용 기간</div><p>펫프렌즈는 위치정보를 수집한 후, 목적을 달성한 즉시 위치정보를 파기합니다. 다만, 관련 법령에 의거하여 일정 기간 동안 위치정보를 보관할 수 있습니다.</p><div> 4. 위치정보의 제공 및 공유</div><p>펫프렌즈는 회원의 위치정보를 원칙적으로 외부에 제공하지 않습니다. 다만, 아래의 경우에는 예외적으로 위치정보를 제공할 수 있습니다: 회원의 동의가 있는 경우 법령에 의해 요구되는 경우</p><div> 5. 동의의 철회</div><p>회원은 언제든지 위치정보 수집에 대한 동의를 철회할 수 있습니다. 동의 철회는 서비스 설정에서 이용 가능하며, 동의를 철회하는 경우 위치기반 서비스의 일부 기능 사용에 제약이 있을 수 있습니다.</p></div>
+        <div class="sc-kjokSJ dWUEBt"><input type="checkbox" name="benefit">
+            <div class="sc-elITqc jqDOvc"><div>[선택]</div> <div>이벤트・혜택 정보 수신</div><div><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M6.23 20.23L8 22l10-10L8 2 6.23 3.77 14.46 12z"></path></svg></div></div></div>
+        <div class="sc-cLVjUO eHgXSG"><div>이벤트 및 혜택 정보 수신에 대한 동의</div><p>펫프렌즈는 회원의 이벤트 및 혜택 정보를 제공하기 위해 아래와 같은 내용에 동의함으로써 이벤트 및 혜택 정보 수신에 대한 동의를 하게 됩니다.</p><div> 1. 정보 수신 목적</div><p>펫프렌즈는 회원에게 다양한 이벤트 및 혜택 정보를 제공함으로써 아래와 같은 목적을 달성합니다: 새로운 서비스 소식 및 업데이트 안내 할인 혜택, 이벤트, 경품 추첨 등 다양한 이벤트 정보 제공</p><div> 2. 수신하는 정보 항목</div><p>펫프렌즈는 아래와 같은 정보를 회원에게 제공할 수 있습니다: 이벤트 안내 및 참여 방법 할인 쿠폰 및 이용 안내 상품 소개 및 판매 프로모션</p><div> 3. 정보 제공 및 공유</div><p> 펫프렌즈는 회원의 개인정보를 외부에 제공하지 않으며, 이벤트 및 혜택 정보는 회원에게 직접 제공됩니다.</p><div>4. 동의의 철회</div><p>회원은 언제든지 이벤트 및 혜택 정보 수신에 대한 동의를 철회할 수 있습니다. 동의 철회는 서비스 설정에서 이용 가능하며, 동의를 철회하는 경우 이벤트 및 혜택 정보 수신에 제약이 있을 수 있습니다.</p></div>
+        <div class="sc-grFOgM hYzqoN"></div>
+        <div class="sc-iJABxv gKXTsx">
+        <button disabled="" onclick="nextStep(this)">동의합니다(다음 단계로 진행)</button>
+        </div>
+    </div>
+    </div>
+</div>
+<div id="step3" class="step">
+    <div>
+        <p>인증 방법을 선택하여 주십시오</p>
+        <ul>
+            <li>이메일 인증</li>
+            <li>휴대폰 인증</li>
+        </ul>
+        <button onclick="nextStep(this)">다음 단계로 진행</button>
+    </div>
+</div>
+<div id="step4" class="step">
+    <div>
+        <input type="radio" id="user" name="type" value="1" disabled>
+        <label for="user">유저</label>
+        <input type="radio" id="merchant" name="type" value="2" disabled><br>
+        <label for="merchant">점주</label>
+    </div>
+    <div class="formDiv" style="width: 550px;">
+    <form action="/join" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="userType" value="">
+    <label for="in1">닉네임</label><input type="text" id="in1" name="userNickName"><br>
+    <label for="in2">이름 <span class="req">*</span></label><input type="text" id="in2" name="userName"required><br>
+    <label for="in3">아이디 <span class="req">*</span></label><input type="text" id="in3" name="userId"required><br>
+    <label for="in4">비밀번호 <span class="req">*</span></label><input type="password" id="in4" name="userPassword" required><br>
+    <label for="in5">이메일</label><input type="email" id="in5" name="userEmail"><br>
+    <label for="in6">전화번호</label><input type="text" id="in6" name="userTel"><br>
+    <input type="hidden" name="userImg" value="">
+    <label for="in7">프로필 사진</label><i></i><input type="file" id="in7" accept="image/*" name="file"><br>
+    <!--    자기소개<input type="text" name="userNickName"><br>-->
+    <button>회원가입</button>
+    </form>
+    </div>
+</div>
+
+<!--/*[+
+
+<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br>
+
+
+<div>
+    <h2>이용약관</h2>
+
+    이용약관<input type="checkbox" name="true"> 내용보기(링크? ? ? )<br>
+    개인정보 취급방침<input type="checkbox" name="true"> 내용보기(링크? ? ? )<br>
+    위치기반 서비스 이용약관<input type="checkbox" name="true"> 내용보기(링크? ? ? )<br>
+
+</div>
+<button>회원가입 완료</button>
++]*/-->
+<script>
+    document.querySelectorAll( "div#step1 .type" ).forEach( elem=>{
+       elem.addEventListener( "click", function(){
+           const index = this.parentNode.children[0] === this ? 0 : 1;
+           const checkbox = document.querySelectorAll( "div#step4 input[type=radio]")[ index ];
+           checkbox.checked = true;
+           document.querySelector( "div#step4 [name=userType]").value = checkbox.value;
+           nextStep( elem );
+       })
+    });
+    document.querySelector( "input[name=all]").addEventListener( "click", function(){
+        document.querySelectorAll( "div#step2 input[type=checkbox]").forEach( elem=> elem.checked=this.checked );
+    });
+    document.querySelectorAll( "div#step2 input[type=checkbox]" ).forEach( elem=>elem.addEventListener( "change", ()=>{
+        validateCheck();
+    }));
+    function validateCheck(){
+        let bClickable = true;
+        document.querySelectorAll( "div#step2 input[type=checkbox]" ).forEach( elem=>{
+           if ( elem.parentNode.querySelector( ".required") )
+               bClickable &= elem.checked;
+            document.querySelector( "button" ).disabled = !bClickable;
+        });
+    }
+    function nextStep( comp ) {
+        const myStepId = parseInt(comp.closest(".step").id.match(/[0-9]+/)[0]);
+        updateStep( myStepId+1 );
+    }
+    function updateStep( nextStepId ) {
+        const nextStepC = document.querySelector( "div#step" + nextStepId );
+        if ( nextStepC ) {
+            document.querySelectorAll(".step").forEach(elem => {
+                elem.style = "display:" + (elem === nextStepC ? "block" : "none") + ";";
+            });
+
+            Array.from(document.querySelector( ".ejGvhi" ).children).forEach( (elem,index)=>{
+                if(index<nextStepId)
+                    elem.classList.add( "certification")
+                else
+                    elem.classList.remove( "certification")
+            });
+        }
+    }
+    function jumpStep( comp ){
+        if ( !comp.classList.contains( "certification" ) )
+            return;
+
+        // nextStep( document.querySelector( "#step" + ( 1 + Array.from(comp.parentNode.children).findIndex( e=>e===comp ) )));
+        updateStep( 1 + Array.from(comp.parentNode.children).findIndex( e=>e===comp ) );
+    }
+
+
+</script>
+</body>
+</html>

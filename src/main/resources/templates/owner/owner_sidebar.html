@@ -1,0 +1,25 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org/">
+
+
+<div th:fragment="ownerSide">
+    <div class="w3-sidebar w3-bar-block" style="background-color: #333; color:#FFF">
+        <h1 class="w3-bar-item"><a th:href="@{/home}">LOGO</a></h1>
+        <h6 class="w3-bar-item">[[${user.getUserId()}]]님, 환영합니다.</h6>
+        <a th:href="@{/owner/home}" class="w3-bar-item w3-button"><ion-icon name="stats-chart"></ion-icon>DashBoard</a>
+        <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="fast-food"></ion-icon>식당 정보 관리</h4>
+        <a th:href="@{/owner/viewRest}" class="w3-bar-item w3-button">식당 정보 확인</a>
+        <a th:href="@{/owner/deleteRest}" class="w3-bar-item w3-button">식당 폐점 신청</a>
+        <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="list"></ion-icon>예약 관리</h4>
+        <a th:href="@{/owner/reservList}" class="w3-bar-item w3-button">예약 목록</a>
+        <a href="#" class="w3-bar-item w3-button">테이블 관리</a>
+        <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="gift"></ion-icon>이벤트 관리</h4>
+        <a th:href="@{/owner/eventList}" class="w3-bar-item w3-button">이벤트 목록</a>
+        <a th:href="@{/owner/addEvent}" class="w3-bar-item w3-button">이벤트 추가</a>
+        <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="person"></ion-icon>개인 정보 관리</h4>
+        <a th:href="@{/owner/userInfo}" class="w3-bar-item w3-button">개인 정보 확인</a>
+        <a th:href="@{/owner/userDelete}" class="w3-bar-item w3-button">회원 탈퇴</a>
+        <a th:href="@{/logout}" class="w3-bar-item w3-button" style="border-top: 1px solid #FFF">로그아웃</a>
+    </div>
+</div>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>지도 기본 예제 | 네이버 지도 API v3</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk"></script>
+    <script type="text/javascript" src="/js/MarkerClustering.js"></script>
+</head>
+<body>
+
+<div id="map" style="width:100%;height:600px;"></div>
+
+
+<script th:inline="javascript">
+    let map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(35.87083136080419, 128.59402442698854),
+        zoom:15,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: naver.maps.Position.TOP_LEFT,
+            style: naver.maps.ZoomControlStyle.SMALL
+        }
+    }), markers = [];
+
+    let htmlMarker1 = {
+            content: '<div style="cursor:pointer;width:40px;height:40px;line-height:42px;font-size:10px;color:white;text-align:center;font-weight:bold;background:url(/img/cluster_marker.png);background-size:contain;"></div>',
+            size: N.Size(40, 40),
+            anchor: N.Point(20, 20)
+        }
+
+        [# th:each="rest : ${list}"]
+
+        marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng([[${rest.getRestLatitude()}]], [[${rest.getRestLongitude()}]]),
+            icon : {
+                content: [
+                    '<img src="/img/marker.png" alt="marker" style="margin:0; padding:0; display:block; max-width:none; max-height:none;-webkit-user-select:none; position:absolute; border:1px solid black; border-radius: 50%; background-color: white;width:25px; height:25px;" />'
+                ].join(''),
+                size: new naver.maps.Size(38, 58),
+                anchor: new naver.maps.Point(19, 58),
+            }
+        });
+        markers.push(marker);
+
+        // 클릭 시 해당 마커를 지도 가운데로 부드럽게 움직이기
+        naver.maps.Event.addListener(marker, 'click', function(e) {
+            // e.preventDefault();
+            map.panTo(new naver.maps.LatLng([[${rest.getRestLatitude()}]], [[${rest.getRestLongitude()}]]));
+
+            marker.setIcon({
+                content: [
+                    '<div style="padding:5px;border:1px solid black; border-radius: 20px; background-color: white;">',
+                    '<img src="/img/marker.png" alt="marker" style="margin:0; padding:0; display:block; max-width:none; max-height:none;-webkit-user-select:none; position:absolute; border:1px solid black; border-radius: 50%; background-color: white;width:25px; height:25px;" />',
+                    '<span style="margin-left: 25px;">[[${rest.getRestName()}]]</span>',
+                    '</div>'
+                ].join(''),
+                size: new naver.maps.Size(38, 58),
+                anchor: new naver.maps.Point(19, 58),
+            })
+        });
+
+
+        [/]
+
+        let markerClustering = new MarkerClustering({
+            minClusterSize: 2,
+            maxZoom: 18,
+            map: map,
+            markers: markers,
+            disableClickZoom: false,
+            gridSize: 120,
+            icons: [htmlMarker1],
+            indexGenerator: [5, 10, 15, 20, 25],
+            stylingFunction: function(clusterMarker, count) {
+                let clusterElement = clusterMarker.getElement();
+                let firstChildDiv = clusterElement.querySelector('div:first-child');
+                if (firstChildDiv) {
+                    firstChildDiv.textContent = count;
+                }
+            }
+        });
+
+
+
+</script>
+</body>
+
+</html>

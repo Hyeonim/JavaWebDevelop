@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>데이터 마이닝 테스트</title>
+    <style>
+        ul, li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body>
+<h2>데이터 마이닝 테스트</h2>
+<div th:each="item : ${freq}">
+    <th:block th:text="${item.menuName}+' :: ' + ${item.frequency}"></th:block>
+</div>
+<hr>
+<h1>Menu and Frequency</h1>
+<ul>
+    <!-- Thymeleaf 반복문을 사용하여 메뉴와 빈도수 리스트 출력 -->
+    <li th:each="entry : ${menuMap.entrySet()}">
+        <span th:text="${entry.key}"></span>([[${entry.value.size()}]]):
+        <span th:each="frequency : ${entry.value}" th:text="${frequency} + ', '"></span>
+    </li>
+</ul>
+<hr>
+<h1>Menu and Frequency(make Query)</h1>
+<ul>
+    INSERT INTO MenuFrequency (key, freq, menuName) VALUES <br>
+    <li th:each="entry : ${menuMap.entrySet()}">
+        ('<span th:text="${entry.key}"></span>',[[${entry.value.size()}]],'
+        <span th:each="frequency : ${entry.value}" th:text="${frequency} + ','"></span>'),
+    </li>
+</ul>
+
+
+
+
+
+<!--<div th:each="entry : ${list.entrySet()}">-->
+<!--    <th:block th:text="${entry.key + ': ' + entry.value}"></th:block><br>-->
+<!--    <div th:each="item : ${freq}">-->
+<!--        <th:block th:text="${item.menuName}+' :: ' + ${item.frequency}"></th:block>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+</body>
+</html>

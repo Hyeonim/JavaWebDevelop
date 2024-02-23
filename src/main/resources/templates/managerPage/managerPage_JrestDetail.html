@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>가게 정보 상세 보기</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right2">
+
+        <style>
+            .container {
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+
+        <h2>가게 상세 정보</h2>
+        <hr>
+
+        <div class="formDiv" style="width: 1000px">
+            <form id="restUpd" action="/manager/managerPage_JrestUpdate" method="post" enctype="multipart/form-data"
+                  style="display: flex">
+
+                <div style="flex: 1;">
+                    <img id="preview" th:src="'data:image/jpeg;base64,' + ${dinning.get().base64Image}" alt="User Image"
+                         style="width: 400px; height: 500px; margin-right: 80px; cursor: pointer;">
+                    <p><input type="file" id="file" name="file" onchange="previewImage(this);"></p>
+                </div>
+
+                <div style="flex: 1;">
+                <p><label>가게 번호 </label><input type="text" th:value="${dinning.get().restNo}" name="restNo" readonly></p>
+                <p><label>가게명 </label><input type="text" th:value="${dinning.get().restName}" name="restName"></p>
+                <p><label>주소 </label><input type="text" th:value="${dinning.get().restAddr}" name="restAddr"></p>
+                <p><label>전화번호 </label><input type="text" th:value="${dinning.get().restTel}" name="restTel"></p>
+                <p><label>좌석 수 </label><input type="text" th:value="${dinning.get().restSeat}" name="restSeat"></p>
+                <p><label>영업 시간 </label><input type="text" th:value="${dinning.get().restTime}" name="restTime"></p>
+                <p><label>휴무 일정 </label><input type="text" th:value="${dinning.get().restOffDays}"
+                                                  name="restOffDays"></p>
+                <p><label>주차장 </label><input type="text" th:value="${dinning.get().restParking}" name="restParking">
+                </p>
+                <p><label>메뉴 </label><input type="text" th:value="${dinning.get().restMenu}" name="restMenu"></p>
+                <p><label>업태 </label><input type="text" th:value="${dinning.get().restCategory}"
+                                                  name="restCategory"></p>
+                <p><label>위도 </label><input type="text" th:value="${dinning.get().restLatitude}" name="restLatitude"
+                                               readonly></p>
+                <p><label>경도 </label><input type="text" th:value="${dinning.get().restLongitude}"
+                                               name="restLongitude" readonly></p>
+                <p><label>평점 </label><input type="text" th:value="${dinning.get().restScore}" readonly></p>
+                <p><label>소개글 </label><input type="text" th:value="${dinning.get().restDescription}"
+                                                name="restDescription"></p>
+                <!--        <input type="hidden" th:value="2" name="userAuth">-->
+                <!--        <p>사진 : <input type="file" name="file"></p> &lt;!&ndash; 파일 업로드 &ndash;&gt;-->
+<!--                <input type="submit" class="fifth" value="수정">-->
+                <!--                      </form>-->
+                <!--                      <form action="/manager/managerPage_JrestDelete" method="post">-->
+                <!--                        <input type="hidden" name="userNo" th:value="${user.userNo}" readonly>-->
+                <!--                        <button type="submit">삭제</button>-->
+                <!--                      </form>-->
+                </div>
+            </form>
+
+
+
+            <div class="container" style="text-align: center">
+                <button id="JrestUpd" class="fifth" type="button">수정</button>
+                <button id="JrestDel" class="fifth" type="button">삭제</button>
+                <button style="margin-left: 50px" onclick="history.go(-1);" class="fifth" id="backButton">이전</button>
+            </div>
+        </div>
+
+        <form id="JrestFormDel" action="/manager/managerPage_JrestDel" method="post">
+            <input type="hidden" name="restNo" th:value="${dinning.get().restNo}" readonly></input>
+        </form>
+    </div>
+
+    <script>
+        // 파일 입력란의 변경 이벤트를 감지하여 이미지를 표시하는 함수
+        function previewImage(input) {
+            var preview = document.getElementById('preview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById('file').addEventListener('change', function () {
+            previewImage(this);
+        });
+
+        document.getElementById("JrestUpd").addEventListener("click", function (event) {
+            document.getElementById("restUpd").submit(); // 폼 제출
+        });
+
+        document.getElementById("JrestDel").addEventListener("click", function (event) {
+            document.getElementById("JrestFormDel").submit(); // 폼 제출
+        });
+    </script>
+</div>
+</html>

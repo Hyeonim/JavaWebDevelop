@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+
+<div th:fragment="managerSide">
+    <div id="left">
+
+        <div class="w3-sidebar w3-bar-block" style="background-color: #333; color:#FFF">
+            <h1 class="w3-bar-item"><a th:href="@{/home}"><img src="/img/logo.png" style="width: 150px; height: 150px"></a></h1>
+
+            <a href="content" style="border-top: solid 1px white; margin-left: 40px">관리자페이지</a>
+
+            <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="person"></ion-icon>고객</h4>
+            <a th:href="managerPage_UList" class="w3-bar-item w3-button">고객 관리</a>
+            <a th:href="managerPage_UAdd" class="w3-bar-item w3-button">고객 추가</a>
+            <a th:href="managerPage_UBlackList" class="w3-bar-item w3-button">블랙리스트 관리</a>
+
+            <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="fast-food"></ion-icon>점주</h4>
+            <a th:href="managerPage_JList" class="w3-bar-item w3-button">점주 관리</a>
+            <a th:href="managerPage_JAdd" class="w3-bar-item w3-button">점주 추가</a>
+
+
+            <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="fast-food"></ion-icon>가게</h4>
+            <a th:href="managerPage_JrestList" class="w3-bar-item w3-button">운영 중인 가게</a>
+            <a th:href="managerPage_JrestCloseList" class="w3-bar-item w3-button">폐점 처리 된 가게</a>
+            <a th:href="managerPage_JrestWaitList" class="w3-bar-item w3-button">폐점 신청 목록</a>
+            <a th:href="managerPage_JrestAdd" class="w3-bar-item w3-button">가게 추가</a>
+
+            <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="book-outline"></ion-icon>문의</h4>
+            <a th:href="managerPage_QA" class="w3-bar-item w3-button">문의</a>
+
+            <h4 class="w3-bar-item" style="border-top: 1px solid #FFF"><ion-icon name="notifications-circle-outline"></ion-icon>공지</h4>
+            <a th:href="managerPage_Notice" class="w3-bar-item w3-button">공지사항</a>
+            <a th:href="managerPage_NoticeAdd" class="w3-bar-item w3-button">공지사항 추가</a>
+        </div>
+    </div>
+</div>
+</html>

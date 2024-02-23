@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>간단한 지도 표시하기</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk"></script>
+
+</head>
+<style>
+    .custom-marker {
+
+        width: 32px;
+        height: 48px;
+        text-align: center;
+        line-height: 48px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #info-box {
+        display: none;
+        transform: translateX(-50%);
+        padding: 10px;
+        background-color: white;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+    }
+</style>
+
+<body>
+
+<div id="map" style="width:100%;height:400px;"></div>
+
+<div id="info-box">하이!</div>
+
+<script>
+
+    var customMarkerIcon = {
+        content: '<div class="custom-marker"> ' +
+            '<h1>가게명 : </h1>' +
+            '<h1>메뉴 : </h1>' +
+            '</div>',
+        anchor: new naver.maps.Point(15, 50) // 마커의 중심을 설정합니다.
+    };
+
+    var map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(35.86742794, 128.59428009),
+        zoom: 18
+    });
+
+    var marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(35.86742794, 128.59428009),
+        icon:customMarkerIcon,
+        map: map
+    });
+
+    naver.maps.Event.addListener(map, 'click', function(e) {
+        marker.setPosition(e.latlng);
+    });
+
+    naver.maps.Event.addListener(marker, 'click', function() {
+        openNaverMain(marker.getPosition());
+    });
+
+    // naver.maps.Event.addListener(marker, 'mouseover', function() {
+    //     showInfoBox(marker.getPosition());
+    // });
+    //
+    // naver.maps.Event.addListener(marker, 'mouseout', function() {
+    //     hideInfoBox();
+    // });
+
+    // 네이버 메인 화면으로 이동하는 함수
+    function openNaverMain() {
+        var url = 'https://www.naver.com';
+        window.open(url, '_blank');
+    }
+
+    // function showInfoBox(position) {
+    //     var infoBox = document.getElementById('info-box');
+    //     infoBox.style.display = 'block';
+    //
+    // }
+    //
+    // function hideInfoBox() {
+    //     var infoBox = document.getElementById('info-box');
+    //     infoBox.style.display = 'none';
+    // }
+
+</script>
+</body>
+</html>

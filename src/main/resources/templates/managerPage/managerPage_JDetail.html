@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>점주 정보 상세보기</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right2">
+
+            <h2>점주 상세 정보</h2>
+            <hr>
+
+            <div class="formDiv" style="width: 1000px;">
+                <form id="updateForm" action="/manager/managerPage_JUpdate" method="post" enctype="multipart/form-data"
+                      style="display: flex;">
+
+                    <div style="flex: 1;">
+                        <img id="preview" th:src="'data:image/jpeg;base64,' + ${user.base64Image}" alt="User Image"
+                             style="width: 400px; height: 500px; margin-right: 80px; cursor: pointer;">
+                        <p><input type="file" id="file" name="file" onchange="previewImage(this);"></p>
+                    </div>
+
+                    <div style="flex: 1;">
+                        <p><label>번호 </label><input type="text" th:value="${user.userNo}" name="userNo" readonly></p>
+                        <p><label>아이디 </label><input type="text" th:value="${user.userId}" name="userId"></p>
+                        <p><label>이름 </label><input type="text" th:value="${user.userName}" name="userName"></p>
+                        <p><label>비밀번호 </label><input type="text" th:value="${user.userPassword}" name="userPassword"></p>
+                        <p><label>Email </label><input type="text" th:value="${user.userEmail}" name="userEmail"></p>
+                        <p><label>전화번호 </label><input type="tel" th:value="${user.userTel}" name="userTel"></p>
+                        <input type="hidden" th:value="2" name="userAuth">
+<!--                        <p>블랙리스트 여부 : <input type="text" th:value="${user.userBlock}"><br>-->
+<!--                            블랙리스트는 true 와 false로 나뉜다.</p>-->
+                    </div>
+                </form>
+
+                <form id="JFormDel" action="/manager/managerPage_JDel" method="post">
+                    <input type="hidden" name="userNo" th:value="${user.userNo}" readonly></input>
+                </form>
+            </div>
+
+        <div>
+            <h3>소유한 가게 정보</h3> - 가게를 클릭하면 상세정보를 확인 하실 수 있습니다.
+            <table>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>이름</th>
+                    <th>주소</th>
+                    <th>전화번호</th>
+                    <th>좌석 수</th>
+                    <th>운영시간</th>
+<!--                    <th>가게 사진</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="dinning : ${dinningList}"
+                    th:onclick="'javascript:redirectToJumrestDetail(\'' + ${dinning.restNo} + '\')'">
+                    <td th:text="${dinning.restNo}"></td>
+                    <td th:text="${dinning.restName}"></td>
+                    <td th:text="${dinning.restAddr}"></td>
+                    <td th:text="${dinning.restTel}"></td>
+                    <td th:text="${dinning.restSeat}"></td>
+                    <td th:text="${dinning.restTime}"></td>
+<!--                    <td th:text="${dinning.restImg}"></td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="JBoxDIV" style="text-align: center">
+            <button type="button" class="fifth" id="fifthJ">수정</button>
+            <button type="button" class="fifth" id="fifthJ2">삭제</button>
+            <button style="margin-left: 50px;" onclick="history.go(-1);" class="fifth" id="backButton">목록보기</button>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        function previewImage(input) {
+            var preview = document.getElementById('preview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // document.getElementById("fifthJ").addEventListener("click", function (event) {
+        //     document.getElementById("updateForm").submit(); // 폼 제출
+        // });
+        //
+        // document.getElementById("fifthJ2").addEventListener("click", function (event) {
+        //     document.getElementById("JFormDel").submit(); // 폼 제출
+        // });
+        // document.getElementById("submit").addEventListener("click", function (event){
+        //     const userName = document.getElementById('userName').value;
+        // })
+
+
+
+        document.getElementById("fifthJ2").addEventListener("click", function (event){
+            swal({
+                title : "삭제 하시겠습니까?",
+                text : "정말 삭제 하시겠습니까?",
+                icon : "warning",
+                buttons : true,
+                dangerMode : true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Success!", [[${user.userName}]]  + "님의 정보가 삭제 되었습니다!", "success")
+                            .then(function (){
+                                document.getElementById("JFormDel").submit();
+                            });
+                    }else {
+                        swal("삭제가 취소 되었습니다.");
+                    }
+                });
+        });
+
+        document.getElementById("fifthJ").addEventListener("click", function (){
+            swal({
+                title : "수정하시겠습니까?",
+                text : "정말 수정하시겠습니까?",
+                icon : "info",
+                buttons : true,
+                dangerMode : false,
+            })
+                .then((willUpdate) => {
+                    if (willUpdate) {
+                        swal("Success!", "삭제 되었습니다!", "success")
+                            .then(function (){
+                                document.getElementById("updateForm").submit();
+                            });
+                    }else {
+                        swal("수정이 취소 되었습니다.");
+                    }
+                });
+        });
+    </script>
+</div>
+</html>

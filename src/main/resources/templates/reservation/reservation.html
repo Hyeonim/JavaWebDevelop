@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 페이지</title>
+    <link rel="stylesheet" href="../css/reservation.css">
+</head>
+<body>
+
+<h1>[[${rest_name}]]</h1>
+
+[[${rest_time_start}]] 부터 [[${rest_time_end}]] 까지 예약 가능한 시간
+
+<div id="reservation">
+    <button class="reserve selected">식사</button>
+    <button class="reserve">픽업</button>
+    <button class="reserve">배달</button>
+</div>
+
+<div id="customer_information_input">
+    <div id="nop">
+        <span><svg class="SVGInline-svg SVGInline--cleaned-svg icon-svg icon-group-svg css-rgbpye-svg ef71la35-svg"
+                   fill="currentColor" style="width: 1.3rem;height: 1.3rem;" xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 25 25"><g id="budicon-group"><path
+                d="M12,7A3,3,0,1,0,9,4,3,3,0,0,0,12,7Zm0-5a2,2,0,1,1-2,2A2,2,0,0,1,12,2Z"></path><path
+                d="M19,6a3,3,0,1,0-3-3A3,3,0,0,0,19,6Zm0-5a2,2,0,1,1-2,2A2,2,0,0,1,19,1Z"></path><path
+                d="M5,6A3,3,0,1,0,2,3,3,3,0,0,0,5,6ZM5,1A2,2,0,1,1,3,3,2,2,0,0,1,5,1Z"></path><path
+                d="M19,7a4.977,4.977,0,0,0-4,2.024h0A4.912,4.912,0,0,0,9,9.026H9A4.986,4.986,0,0,0,0,12v2.5A1.5,1.5,0,0,0,1.5,16H2v4.5A1.5,1.5,0,0,0,3.5,22h3A1.5,1.5,0,0,0,8,20.5V17.908A1.484,1.484,0,0,0,8.5,18H9v5.5A1.5,1.5,0,0,0,10.5,25h3A1.5,1.5,0,0,0,15,23.5V18h.5a1.484,1.484,0,0,0,.5-.092V20.5A1.5,1.5,0,0,0,17.5,22h3A1.5,1.5,0,0,0,22,20.5V16h.5A1.5,1.5,0,0,0,24,14.5V12A5,5,0,0,0,19,7ZM7,20.5a.5.5,0,0,1-.5.5h-3a.5.5,0,0,1-.5-.5V16a1,1,0,0,0-1-1H1.5a.5.5,0,0,1-.5-.5V12A3.993,3.993,0,0,1,8.266,9.7h0A4.96,4.96,0,0,0,7,13v7.5ZM15.5,17H15a1,1,0,0,0-1,1v5.5a.5.5,0,0,1-.5.5h-3a.5.5,0,0,1-.5-.5V18a1,1,0,0,0-1-1H8.5a.5.5,0,0,1-.5-.5V13a4,4,0,0,1,8,0v3.5A.5.5,0,0,1,15.5,17ZM23,14.5a.5.5,0,0,1-.5.5H22a1,1,0,0,0-1,1v4.5a.5.5,0,0,1-.5.5h-3a.5.5,0,0,1-.5-.5V13a4.96,4.96,0,0,0-1.266-3.3h0A3.993,3.993,0,0,1,23,12Z"></path></g></svg></span>
+        <select for="guests">
+            <th:block th:each="num : ${#numbers.sequence(1,20)}">
+                <option th:value="${num+'명'}" th:text="${num+'명'}"></option>
+            </th:block>
+        </select>
+    </div>
+    <div>
+        <input type="date" for="date" id="start"
+               th:with="today=${#dates.createNow()}, val=${#dates.format(today, 'yyyy-MM-dd')}
+               , maxVal=${#dates.format(#dates.create( today.getYear() +1901, today.getMonth()+1, today.getDate() ), 'yyyy-MM-dd')}"
+               th:value="${val}" th:min="${val}" th:max="${maxVal}" />
+    </div>
+    <div>
+        <span><svg class="SVGInline-svg SVGInline--cleaned-svg icon-svg icon-wall-clock-svg css-rgbpye-svg ef71la35-svg"
+                   fill="currentColor" style="width: 1.3rem;height: 1.3rem;" xmlns="http://www.w3.org/2000/svg"
+                   viewBox="0 0 25 25"><g id="budicon-wall-clock"><path
+                d="M12.5,0A12.5,12.5,0,1,0,25,12.5,12.5,12.5,0,0,0,12.5,0Zm0,24A11.5,11.5,0,1,1,24,12.5,11.513,11.513,0,0,1,12.5,24Z"></path><path
+                d="M13,12.293V6.5a.5.5,0,1,0-1,0v6a.5.5,0,0,0,.142.346l0,.006,4,4a.5.5,0,0,0,.707-.707Z"></path></g></svg></span>
+        <select for="time">
+            <option value="전체보기">전체보기</option>
+            <th:block
+                    th:with="startTime=${T(java.time.LocalTime).parse(rest_time_start, T(java.time.format.DateTimeFormatter).ofPattern('HH:mm'))}, loopCount=${rest_time_count}-1">
+                <th:block th:each="i : ${#numbers.sequence(0, loopCount) }">
+                    <option th:value="${startTime.plusMinutes(i*30)}"
+                            th:text="${#temporals.format(startTime.plusMinutes(i*30), 'HH:mm')}"></option>
+                </th:block>
+            </th:block>
+        </select>
+    </div>
+</div>
+
+예약 가능한 좌석 <th:block th:with="diff=${rest_seat_normal}-${reservePeopleCount}" th:text="${diff}"></th:block> ( [[${reservePeopleCount}]] / [[${rest_seat_normal}]] )
+<th:block th:if="0!=${rest_seat_room}" th:utext="'방 '+${reserveRoomCount}+' / ' +${rest_seat_room}+'<br>'"></th:block>
+<th:block th:if="0!=${rest_seat_room}" th:utext="|방 예약 가능<input type='checkbox' for='room_type'/>|"></th:block>
+<br>
+
+예약 현황 총 [[${reservePeopleCount}]]명
+<th:block th:if="0!=${reserveRoomCount}" th:text="${reserveRoomCount}+'방'"></th:block>
+<br>
+
+
+매장에 방문하신 시간을 기준이후로 2시간<br>
+특별요청 <input type="text" for="message"/><br>
+<button id="sendButton" >예약하기</button>
+
+
+<!--<div th:each="reserveList : ${reservationList}">-->
+<!--    <div th:with="condition=${not #lists.isEmpty(reserveList)}">-->
+<!--        &lt;!&ndash; condition을 사용하여 출력 또는 다른 작업 수행 &ndash;&gt;-->
+<!--        <div th:if="${condition}">-->
+<!--            [${reserveListSat.index}]]-->
+<!--            <div th:each="reserve : ${reserveList}">-->
+<!--                <ul>-->
+<!--                    <li>시간별 예약 상황</li>-->
+<!--                    <li th:text="${reserve.res_time}"></li>-->
+<!--                    <li th:text="${reserve.res_guest_count}"></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div th:unless="${condition}">-->
+<!--            [${reserveListStt.index}]]-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div>
+    시간별 예약 상황
+    <ul th:each="reserve : ${reservationList}">
+        <li th:text="${reserve.date}"></li>
+        <li th:text="${reserve.count}+'명'"></li>
+    </ul>
+</div>
+
+<br>
+<pre>
+예약 등록시 필요한 정보
+날짜 <label id="date"></label>
+시간 <label id="time"></label>
+인원 <label id="guests"></label>
+예약자 ( 로그인 상태면 알아서 ) <label id="user_no"></label>
+예약 메시지 <label id="message"></label>
+방 타입 <label id="room_type"></label>
+가게 번호 <label id="rest_no">[[${rest_no}]]</label>
+예약할 테이블자리 (미구현) <label id="rest_table_no"></label>
+</pre>
+
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    $(document).ready(() => {
+        $("div#reservation button").click(function () {
+            $(this).addClass("selected");
+            $("div#reservation button").not(this).removeClass("selected");
+        });
+
+        // change 이벤트 처리
+        $(document).on("change", function (event) {
+            let targetLabel = document.querySelector( "#"+ event.target.getAttribute( "for" ) );
+            let newValue;
+            if ( ['select', 'input'].includes( event.target.tagName.toLowerCase() ) )
+                newValue =  event.target.value;
+            if ( event.target.type === "checkbox")
+                newValue = event.target.checked;
+            if ( !targetLabel || !newValue )
+                return;
+            targetLabel.innerText = newValue;
+        });
+
+        $(document).find('[for]').each( function(){
+            $(this).trigger('change');
+        });
+
+        $("#sendButton").click(function () {
+
+            let checkboxes = $('input[type="checkbox"]');
+
+            var jsonData = {
+                count: $('select')[0].value,
+                time: $('select')[1].value,
+                date: $('input[type=date]').val(),
+                msg: $('input[type=text]').val(),
+                b: checkboxes[0] && checkboxes[0].checked.toString(),
+                // 추가 필요한 데이터
+            };
+
+            // 서버로 JSON 데이터 전송
+            $.ajax({
+                type: "POST", // 전송 방식 (POST, GET 등)
+                url: "/reserve/insert/", // 서버의 엔드포인트 URL
+                contentType: "application/json; charset=utf-8", // 전송하는 데이터의 타입 및 문자 인코딩 지정
+                data: JSON.stringify(jsonData), // JSON 데이터 문자열로 변환
+                success: function (response) {
+                    // 성공적으로 응답을 받았을 때의 처리
+                    console.log("전송 성공", response);
+                },
+                error: function (error) {
+                    // 전송 중 오류가 발생했을 때의 처리
+                    console.error("전송 실패", error);
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

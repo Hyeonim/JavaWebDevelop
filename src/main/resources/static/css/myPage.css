@@ -1,0 +1,24 @@
+*{
+    margin : 0;
+    padding : 0;
+}
+
+#main-container {
+    margin : auto;
+    max-width: 100%;
+}
+#content-container {
+    width:100%;
+}
+
+#side-container {
+    height: 700px;
+    width : 160px;
+    position : fixed;
+    z-index: 1;
+    overflow-x : hidden;
+}
+
+#content {
+    margin-left: 160px;
+}

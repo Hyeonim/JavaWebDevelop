@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{owner/myPage_layout}">
+
+<th:block th:fragment="content">
+    <th:block th:object="${user}">
+        <div class="formDiv">
+        <form id="updateUserForm" th:action="@{/owner/userUpdate}" method="post" enctype="multipart/form-data">
+            <p><label>아이디</label><input type="text" name="userId" th:value="*{getUserId()}"></p>
+            <p><label>이름</label><input type="text" name="userName" th:value="*{getUserName()}"></p>
+            <p><label>비밀번호</label><input type="password" name="userPassword" th:value="*{getUserPassword()}"></p>
+            <p><label>이메일</label><input type="email" name="userEmail" th:value="*{getUserEmail()}"></p>
+            <p><label>전화번호</label><input type="tel" name="userTel" th:value="*{getUserTel()}"></p>
+            <p><label>프로필 사진</label><input type="file" name="file" id="file"></p>
+            <p><label id="last"></label><img id="preview" th:if="*{getUserImg() != null}"
+                                            th:src="'data:image/jpeg;base64,' + *{getBase64Image()}"></p>
+
+            <input type="hidden" th:value="*{getUserNo()}" name="userNo">
+            <input type="hidden" th:value="*{getUserAuth()}" name="userAuth">
+            <input type="button" value="수정" onclick="submitUserForm()">
+            <input type="button" value="취소" th:onclick="|location.href='@{/owner/userInfo}'|">
+        </form>
+        </div>
+    </th:block>
+    <script>
+        let preview = document.getElementById('preview');
+        if(!preview) {
+            var lastLabel = document.getElementById('last');
+            var img = document.createElement('img');
+            img.id = 'preview';
+            img.alt = '가게 사진';
+            img.src = '/img/no_image.png';
+
+            lastLabel.parentNode.insertBefore(img, lastLabel.nextSibling);
+        }
+        function submitUserForm() {
+            if(confirm("수정하시겠습니까?")) {
+                let form = document.getElementById("updateUserForm");
+                form.submit();
+            }
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('preview').setAttribute('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById('file').addEventListener('change', function () {
+            previewImage(this);
+        });
+    </script>
+</th:block>
+
+</html>

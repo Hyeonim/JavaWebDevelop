@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>고객 정보 상세보기</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right2">
+
+        <h2>고객 상세 정보</h2>
+
+        <div class="formDiv" style="width: 1050px">
+            <form  id="UUpdForm" action="/manager/managerPage_UUpdate" method="post" enctype="multipart/form-data"
+                   style="display: flex; align-items: center;">
+
+                <div style="flex: 1;">
+                    <img id="preview" th:src="'data:image/jpeg;base64,' + ${user.get().base64Image}" alt="User Image"
+                         style="width: 400px; height: 500px; margin-right: 80px; cursor: pointer;">
+                    <p><input type="file" id="file" name="file" onchange="previewImage(this);"></p>
+                </div>
+
+                <div style="flex: 1; width: 50px">
+                    <p><label>번호 </label><input id="userNo" name="userNo" type="text" th:value="${user.get().userNo}" readonly></p>
+                    <p><label>아이디 </label><input id="userId" name="userId" type="text" th:value="${user.get().userId}"></p>
+                    <p><label>이름 </label><input id="userName" name="userName" type="text" th:value="${user.get().userName}"></p>
+                    <p><label>이메일 </label><input id="userEmail" name="userEmail" type="email" th:value="${user.get().userEmail}"></p>
+                    <p><label>비밀번호 </label><input id="userPassword" name="userPassword" type="password" th:value="${user.get().userPassword}"></p>
+                    <p><label>전화번호 </label><input id="userTel" name="userTel" type="tel" th:value="${user.get().userTel}"></p>
+                    <input id="userAuth" name="userAuth" type="hidden" readonly th:value="${user.get().userAuth}">
+                    <p><label>블랙리스트 여부 </label><select id="userBlock" name="userBlock" >
+                        <option value="1" th:selected="${user.get().userBlock == 1}">Yes</option>
+                        <option value="0" th:selected="${user.get().userBlock == 0}">No</option>
+                    </select></p>
+                </div>
+            </form>
+
+            <form id="UDelForm" action="/manager/managerPage_UDel" method="post">
+                <input type="hidden" name="userNo" th:value="${user.get().userNo}" readonly></input>
+            </form>
+        </div>
+
+        <div style="margin-left: 500px">
+            <button id="UUpd" class="fifth" type="button">수정</button>
+            <button id="UDel" class="fifth" type="button">삭제</button>
+            <button style="margin-left: 50px" onclick="history.go(-1);" class="fifth" id="backButton">이전</button>
+        </div>
+    </div>
+
+    <script>
+        function previewImage(input) {
+            var preview = document.getElementById('preview');
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // document.getElementById("UDel").addEventListener("click", function(event) {
+        //     document.getElementById("UDelForm").submit(); // 폼 제출
+        // });
+        //
+        // document.getElementById("UUpd").addEventListener("click", function(event) {
+        //     document.getElementById("UUpdForm").submit(); // 폼 제출
+        // });
+
+        document.getElementById("UDel").addEventListener("click", function (event){
+            swal({
+                title : "삭제 하시겠습니까?",
+                text : "정말 삭제 하시겠습니까?",
+                icon : "warning",
+                buttons : true,
+                dangerMode : true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Success!", "삭제 되었습니다!", "success")
+                            .then(function (){
+                                document.getElementById("UDelForm").submit();
+                            });
+                    }else {
+                        swal("삭제가 취소 되었습니다.");
+                    }
+                });
+        });
+
+        document.getElementById("UUpd").addEventListener("click", function (event) {
+            swal({
+                title : "수정하시겠습니까?",
+                text : "정말 수정 하시겠습니까?",
+                icon : "info",
+                buttons : true,
+                dangerMode : false,
+            })
+                .then((willUpDate) => {
+                    if (willUpDate) {
+                        swal("Success!", "수정 되었습니다!", "success")
+                            .then(function (){
+                                document.getElementById("UUpdForm").submit();
+                            });
+                    }else {
+                        swal("수정이 취소 되었습니다.");
+                    }
+                });
+        });
+
+
+
+    </script>
+</div>
+</html>

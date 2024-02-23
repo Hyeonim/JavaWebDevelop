@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy4Ck6YfI6cE2HpjP+9ynS2Z+L4heOzC1" crossorigin="anonymous">-->
+
+
+</head>
+
+<style>
+    a:link {
+        text-decoration: none;
+    }
+
+    body {
+        /*font-family: 'Arial', sans-serif;*/
+        margin: 0;
+        padding: 0;
+        /*background-color: #f2f2f2;*/
+    }
+
+    .userBox {
+        display: flex;
+        /*border-radius: 0.5rem;*/
+        /*box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);*/
+        background-color: #fff;
+        /*border-bottom: 1px solid lightgray;*/
+    }
+
+    .pointBox {
+        display: flex;
+        /*border-radius: 0.5rem;*/
+        background-color: #fff;
+        padding: 1rem 1.5rem 1.2rem 1rem;
+        justify-content: space-between;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .point {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 117px;
+        font-size: 40px
+    }
+
+    .resBox1 {
+        display: block;
+        margin: 30px auto 0;
+        width: 170px;
+        -webkit-box-sizing: border-box;
+        border-radius: 10px;
+        height: 40px;
+        line-height: 38px;
+        padding: 0 18px;
+        text-decoration: none;
+        cursor: pointer;
+        /*border: 1px solid #333333;*/
+        /*border: 1px solid rgba(72, 119, 166, 0.89); !* 테두리 *!*/
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+        /*background-color: rgba(74, 147, 183, 0.67);*/
+        background-color: rgb(121 239 180 / 67%);
+
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .resBox2 {
+        display: block;
+        margin: 30px auto 0;
+        width: 170px;
+        -webkit-box-sizing: border-box;
+        border-radius: 10px;
+        height: 40px;
+        line-height: 38px;
+        padding: 0 18px;
+        text-decoration: none;
+        cursor: pointer;
+        /*border: 1px solid #333333;*/
+        /*border: 1px solid rgba(72, 119, 166, 0.89); !* 테두리 *!*/
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+        /*background-color: rgba(74, 147, 183, 0.67);*/
+        background-color: rgb(215 215 42 / 70%);
+
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .resBox3 {
+        display: block;
+        margin: 30px auto 0;
+        width: 170px;
+        -webkit-box-sizing: border-box;
+        border-radius: 10px;
+        height: 40px;
+        line-height: 38px;
+        padding: 0 18px;
+        text-decoration: none;
+        cursor: pointer;
+        /*border: 1px solid #333333;*/
+        /*border: 1px solid rgba(72, 119, 166, 0.89); !* 테두리 *!*/
+        color: white;
+        text-align: center;
+        vertical-align: middle;
+        /*background-color: rgba(74, 147, 183, 0.67);*/
+        background-color: gray;
+
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    #mySideBar {
+        font-size: 20px;
+        color: rgb(69, 69, 69);
+        display: flex;
+        margin-bottom: 0.7rem;
+        margin-top: -0.2rem;
+        justify-content: space-between;
+    }
+
+    .mypage_sidebar_nav {
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        flex-grow: 1; /* 균등하게 공간을 분배 */
+        padding: 7.8px 118.9px;
+        text-align: center; /* 가운데 정렬 */
+        box-sizing: border-box; /* padding을 요소 크기에 포함 */
+    }
+
+
+    #u h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+
+    #headerBox {
+        background-image: url("/img/ck_tica034m19090391_l-580x387.jpg");
+        background-size: cover; /* 이미지를 박스에 가득 차게 설정 */
+        background-position: center; /* 이미지를 가운데 정렬 */
+        filter: blur(2px); /* blur 값은 필요에 따라 조절하세요. */
+    }
+
+    .header {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+    }
+
+    .header.drop {
+        position: fixed;
+        animation: dropHeader 0.3s;
+        background-color: skyblue;
+    }
+
+    @keyframes dropHeader {
+        0% {
+            top: -5rem;
+        }
+        100% {
+            top: 0;
+        }
+    }
+
+    .custom-tooltip {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .custom-tooltip .tooltip-text {
+        visibility: hidden;
+        width: 300px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .custom-tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+
+
+</style>
+
+
+<body>
+<header class="header" th:include="~{/userPage/userPage_header::headerFragment}"></header>
+<script>
+    let header = document.querySelector(".header");
+    let headerHeight = header.offsetHeight;
+
+    window.onscroll = function () {
+        let windowTop = window.scrollY;
+        if (windowTop >= headerHeight) {
+            header.classList.add("drop");
+        } else {
+            header.classList.remove("drop");
+        }
+    };
+</script>
+
+<div id="headerBox" style="display: flex; justify-content: center;
+    align-items: center; width: auto; height: 370px;">
+    <h6 style="margin-top: -80px">
+        <span style="font-size: 48px; color: rgb(174, 102, 199);"></span>
+    </h6>
+</div>
+
+<div id="noticeBox" style="width: 1230px; height: 219.047px;
+    position: relative;
+    margin: 0 auto; /* 가로 중앙 정렬을 위한 margin 속성 추가 */
+    bottom: 166px;
+    z-index: 98;
+    margin-bottom: -90px;
+    box-shadow: 0px 3px 18px #f1e7f4; background-color: #fff">
+
+    <div class="userBox" style="display: flex">
+        <div style="text-align: center; padding: 10px; width: 60%; border-right: 1px solid lightgray; ">
+            <div style="display: flex; font-size: 18px; font-weight: bold"
+                 th:text="${main_user.getUserName()} + '님 반가워요'"></div>
+            <div style="text-align: center; font-size: 18px; margin-top: 1rem;">최근 예약 한 식당</div>
+
+            <div style="display: flex; justify-content: center">
+                <div th:switch="${statusMessage}">
+                    <div th:case="'Reservation Completed'" class="resBox1"
+                         th:text="${latestReservation != null ? latestReservation.getRestNo().restName : ''}"></div>
+                    <div th:case="'Waiting for Confirmation'" class="resBox2"
+                         th:text="${latestReservation != null ? latestReservation.getRestNo().restName : ''}"></div>
+                    <div th:case="'Reservation Canceled by User' or 'Reservation Rejected by Restaurant' or 'No Show - User did not arrive' or 'Reservation Expired'"
+                         class="resBox3">없음
+                    </div>
+                    <div th:case="*" class="resBox3">없음</div>
+                </div>
+
+
+                <div class="custom-tooltip">
+                    <img style="width: 17px; height: 17px" src="/img/info2.jpeg">
+                    <div class="tooltip-text">초록색은 예약이 완료된 가게, 노란색은 예약을 수락대기중인 가게입니다. </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div style="width: 40%;">
+            <div class="pointBox">
+                <div>MY포인트</div>
+                <a href="#"><img src="/img/setup.png"></a>
+            </div>
+            <div class="point">
+                <div>0P</div>
+            </div>
+        </div>
+    </div>
+
+    <nav style="display: flex">
+        <div id="mySideBar">
+            <div class="mypage_sidebar_nav" id="postsSelect"><a
+                    th:href="@{/user/user_posts}">My 예약</a></div>
+            <div class="mypage_sidebar_nav" id="reviewSelect"><a
+                    th:href="@{/user/user_review}">My 리뷰</a></div>
+            <div class="mypage_sidebar_nav" id="QASelect"><a
+                    th:href="@{/QA/user_qa}">My 문의</a></div>
+            <div class="mypage_sidebar_nav" id="infoSelect"><a
+                    th:href="@{/user/user_info}">My 정보</a></div>
+        </div>
+    </nav>
+</div>
+
+<div class="content-container" th:include="~{::content}"></div>
+
+
+</body>
+</html>

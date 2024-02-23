@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>문의, 답변</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right3">
+
+        <style>
+
+            .qu {
+                width: 900px;
+                border: solid 2px gray;
+                border-radius: 10px;
+            }
+
+            .qu h2 {
+
+                margin-left: 10px;
+            }
+
+            .qu p {
+
+                margin-left: 10px;
+            }
+
+
+            .an {
+                width: 900px;
+                margin-top: 20px;
+                border: solid 2px gray;
+                border-radius: 10px;
+            }
+
+            .an form {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .an form p {
+                margin-bottom: 15px;
+            }
+
+            .an label {
+                font-weight: bold;
+                display: block;
+            }
+
+            .an input[type="text"],
+            .an textarea {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .an textarea {
+                resize: vertical;
+            }
+
+            .an h2 {
+                margin-left: 10px;
+            }
+        </style>
+
+        <h2>문의 답변 </h2>
+        <hr>
+        <div class="qu">
+            <h2>문의</h2>
+            <hr>
+            <p><span class="label">번호 :</span> <span th:text="${qa.get().id}" readonly></span></p>
+            <p><span class="label">제목 :</span> <span th:text="${qa.get().qaTitle}"></span></p>
+            <p><span class="label">유저이름 :</span> <span th:text="${qa.get().userNo.userName}"></span></p>
+            <p><span class="label">내용 :</span> <span th:text="${qa.get().qaContent}"></span></p>
+        </div>
+
+        <div class="an">
+            <h2>답변</h2>
+            <hr>
+            <form action="managerPage_QARequest" method="post">
+                <input type="hidden" name="id" th:value="${qa.get().id}"/>
+                <p>
+                    <label for="title">제목 :</label><br>
+                    <input type="text" name="title" id="title">
+                </p>
+                <p>
+                    <label for="content">답변 내용 :</label><br>
+                    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                </p>
+                <p>
+                    <input class="fifth" type="submit" value="등록">
+                    <button style="margin-left: 50px" onclick="history.go(-1);" class="fifth2" id="backButton">이전</button>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

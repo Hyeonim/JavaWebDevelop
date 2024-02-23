@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 상세보기</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right2">
+
+        <h2>공지사항 상세보기</h2>
+        <hr>
+
+        <div class="formDiv"
+             style="margin: 20px; width: 1200px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9; text-align: left">
+            <form id="NFormUpdate" action="/manager/managerPage_NoticeUpdate" method="post" style="margin-left: 40px">
+                <input type="hidden" name="id" th:value="${notice.get().id}"/>
+                <span>제목 : <input name="subject" th:value="${notice.get().subject}"
+                                     style="width: 400px; padding: 10px; border: none; border-bottom: 1px solid #ccc; border-radius: 5px; font-size: 16px; box-sizing: border-box; margin-top: 30px; margin-bottom: 20px"></span><br>
+                <span>작성자 : <input name="writer" th:value="${notice.get().writer}"
+                                   style="padding: 10px;  border: none; border-bottom: 1px solid #ccc; border-radius: 5px; font-size: 16px;margin-bottom: 20px"></span><br>
+                <span>내용 : <br>
+                <textarea th:text="${notice.get().content}" name="content"
+                          style="width: 900px; height: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; box-sizing: border-box;"></textarea></span>
+            </form>
+
+            <form id="NFormDel" action="/manager/managerPage_NoticeDelete" method="post">
+                <input type="hidden" name="id" th:value="${notice.get().id}" readonly style="display: none;"></input>
+            </form>
+
+            <div id="NBoxDiv">
+                <button type="submit" class="fifth" id="fifthU">수정</button>
+                <button type="submit" class="fifth" id="fifthD" style="margin-left: 10px">삭제</button>
+                <button style="margin-left: 50px" onclick="history.go(-1);" class="fifth" id="backButton">이전</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("fifthU").addEventListener("click", function (event) {
+            document.getElementById("NFormUpdate").submit(); // 폼 제출
+        });
+
+        document.getElementById("fifthD").addEventListener("click", function (event) {
+            document.getElementById("NFormDel").submit(); // 폼 제출
+        });
+    </script>
+</div>
+</html>
+
+
+

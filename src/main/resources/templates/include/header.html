@@ -1,0 +1,104 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<title th:fragment="titleFragment">맛집 예약, 예맛!</title>
+
+<div th:fragment="headerFragment" id="top">
+    <script>
+        function sendSearchQuery() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/search?'+getSearchWord(), true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let doc = new DOMParser().parseFromString(xhr.responseText, 'text/html');
+                    let div = document.querySelector('ul#resultList');
+                    if ( !div ) return;
+                    div.innerHTML = doc.querySelector('ul#resultList').innerHTML;
+                    let scriptTags = doc.querySelectorAll('script');
+                    let runnableScript = [];
+                    scriptTags.forEach(scriptTag => {
+                        if (null === scriptTag.getAttribute("map"))
+                            return;
+                        // eval(scriptTag.textContent);
+                        runnableScript.push( scriptTag.textContent );
+                    });
+                    eval( runnableScript.join( '' ) );
+                    var script = Object.assign(document.createElement('script'), { type: 'text/javascript', src: "/js/imglazy.js" });
+                    document.head.appendChild(script);
+                }
+            };
+            xhr.send();
+        }
+    </script>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light" >
+            <div th:replace="~{/include/logo::logoContent(30,1)}"></div>
+
+            <form th:action="@{/search}" method="get">
+                <input id="searchBar" type="search" placeholder="음식 또는 식당명 입력" aria-label="Search" name="keyword" oninput=sendSearchQuery() th:value="${param.keyword}">
+            </form>
+            <div id="navbarNav">
+                <button>
+
+                </button>
+                <button onclick="onMenuClick()" onblur="handleBlur()">
+                    <img src="/images/logo_avatar_32dp.png" alt="avatar">
+                </button>
+                <div>
+                    <div style="
+                         transform-origin: right top;
+                         right: 16px;
+                         top: 62px;
+                         background-color: #ffffffa0;
+                         max-height: 865px;
+                         "
+                    class="dropmenu" name="mymenu">
+                        <ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">로그인</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/signUp">회원가입</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/owner/home">가게관리</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user/userPage">마이페이지</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/manager/content">관리자페이지</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">로그아웃</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <script>
+        function onMenuClick( btn ){
+            document.querySelector( "[name=mymenu]" ).classList.toggle( "visible" );
+        }
+        async function handleBlur() {
+            await sleep(200)
+            document.querySelector( "[name=mymenu]" ).classList.remove( "visible" );
+        }
+        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+        function getSearchWord(){
+            const keyword = document.getElementById('searchBar').value;
+
+            const filterString = Array.from(document.querySelectorAll( "ul[class^='filter']" )).map( item=>
+                item.className + "=" + Array.from(item.querySelectorAll( ".picked" )).map(e=>e.value).join( "," )
+            ).join("&");
+
+            return 'keyword=' + encodeURIComponent(keyword) + "&" + filterString;
+        }
+
+    </script>
+</div>
+</html>
+
+

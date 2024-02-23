@@ -1,0 +1,172 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/" lang="ko">
+<head>
+    <title th:include="~{/include/header::titleFragment}">title</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+</head>
+<body>
+<header th:include="~{/include/header::headerFragment}">
+    head
+</header>
+<div id="content" th:include="~{/include/content::contentFragment}">
+    head
+</div>
+<footer th:include="~{/include/footer::footerFragment}">
+    footer
+</footer>
+
+
+
+<script>
+
+    let slideIndex = 0;
+    showSlides();
+    function showSlides() {
+        let slides = document.getElementsByClassName("mySlides");
+
+        slideIndex = Math.min( slides.length, ( slideIndex + 1 ) % slides.length );
+
+        for ( let i = 0; i < slides.length; i++)
+            slides[i].style.display = i === slideIndex ? "block" : "none";
+
+        setTimeout(showSlides, 2000); // 2초마다 이미지가 체인지됩니다
+        setTimeout( slideSlide, 2000 )
+    }
+
+    function slideSlide() {
+
+        const listElements = document.querySelectorAll('.slideshow .background');
+
+        let target = null
+        listElements.forEach(function(element) {
+            // 요소의 위치와 화면의 높이를 비교하여 화면에 보이는 요소인지 확인
+            const elementTop = element.getBoundingClientRect().top;
+            const elementBottom = element.getBoundingClientRect().bottom;
+            const screenHeight = window.innerHeight || document.documentElement.clientHeight;
+            const elementHeight = element.getBoundingClientRect().height + 20;
+
+            // Element의 height가 화면을 가리면서 조건을 만족하지 않도록 함
+            if (elementTop < screenHeight && elementBottom - elementHeight > 0 && null === target ) {
+                if ( element.classList.contains( "over") )
+                {
+                    // target = undefined;
+                    return;
+                }
+
+                target = element;
+            }
+        });
+        if ( !target )
+            return;
+
+        moveToSlide( target, 1 );
+    }
+    document.addEventListener('mouseover', function(event) {
+        let slide = event.target.closest( ".slideshow .background");
+        if ( slide )
+        {
+            let mouseLeaveHandler = function(event) {
+                slide.classList.remove("over")
+                this.removeEventListener('mouseleave', mouseLeaveHandler );
+            }
+
+            slide.classList.add( "over" );
+            slide.addEventListener( 'mouseleave', mouseLeaveHandler );
+        }
+
+        let review = event.target.closest( ".reviewT");
+        if ( review )
+        {
+            let tip = review.querySelector( ".overtip" );
+            if ( tip ) {
+                let mouseLeaveHandler = function (event) {
+                    tip.style.opacity = "0";
+                    review.removeEventListener('mouseleave', mouseLeaveHandler);
+                }
+
+                tip.style.opacity = "1";
+                review.addEventListener('mouseleave', mouseLeaveHandler);
+            }
+        }
+    });
+
+    // <!--/*[+ function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); } +]*/-->
+
+    async function moveToSlide(slider) {
+        let slideIndex = (slider?.index);
+        const index = 1;
+        const slideWidth = 1008; //slider.clientWidth;
+        const newPosition = -slideWidth * index;
+
+
+        const SLIDE_SIZE = 4;
+        const selectedDivs = Array.from(slider.children).slice(0, SLIDE_SIZE);
+        if ( 1 === slideIndex )
+        selectedDivs.forEach(div => slider.appendChild(div));
+
+        slider.style.transition = "";
+        slider.style.transform = "";
+        await sleep(100)
+        slider.style.transition = "transform 0.5s ease";
+        slider.style.transform = `translateX(${newPosition}px)`;
+
+        slider.index = index;
+
+        // // transitionend 이벤트 핸들러 등록
+        // slider.addEventListener("transitionend", function(event) {
+        //     // transform transition 이 완료되면 콜백 함수 호출
+        //     if (event.propertyName === "transform") {
+        //         slideslideForward( slider );
+        //     }
+        //     // 핸들러는 한 번만 실행되도록 제거
+        //     slider.removeEventListener("transitionend", this);
+        // });
+    }
+    function slideslideForward( parentDiv ){
+        // parentDiv.style.transition = "";
+        // parentDiv.style.transform = "";
+        // 앞에서 0~5개의 div를 선택합니다.
+        // const selectedDivs = Array.from(parentDiv.children).slice(0, 5);
+        // selectedDivs.forEach(div => parentDiv.appendChild(div));
+    }
+
+    document.addEventListener('scroll', function() {
+        // 페이지의 스크롤 상태가 변경될 때 실행되는 코드
+        // 여기에 원하는 동작을 추가할 수 있습니다.
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        // 뷰포트의 높이
+        let viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        // 문서의 총 높이
+        let totalHeight = document.body.scrollHeight;
+        // 스크롤이 문서 맨 아래에 도달했는지 확인
+        if (scrollTop + viewportHeight >= totalHeight) {
+            // 페이지의 맨 아래에 도달했을 때 실행할 코드
+            let dataTemplate = '<div class="slideshow"><div class="background">$content$</div></div>';
+            fetch("/homeSlide")
+                .then(resp => resp.text())
+                .then(data =>{
+                    let doc = new DOMParser().parseFromString(data, 'text/html');
+                    const newDiv = document.createElement("div");
+                    newDiv.innerHTML = dataTemplate.replace( "$content$", doc.querySelector('body').innerHTML );
+                    const targetDiv = document.querySelector( "div.footer_height" );
+                    targetDiv.appendChild(newDiv);
+                }
+            );
+        }
+    });
+
+</script>
+
+<script>
+    // "click!" 요소를 클릭했을 때 실행되는 함수
+    document.getElementById("clickText").addEventListener("click", function() {
+        // "click!" 요소 숨김 처리
+        document.getElementById("clickText").style.display = "none";
+        // "restName" 요소 표시
+        document.getElementById("restName").style.display = "block";
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultrang.net.nz/thymeleaf/layout">
+<head>
+    <title></title>
+    <script></script>
+    <link rel="stylesheet" href="../../static/css/main.css">
+</head>
+<body>
+<div th:fragment="contentFragment">
+    <div class="footer_height">
+
+        <div id="center_box">
+
+            <div id="topDiv">
+
+                <div class="container mt-5" style="border: solid 1px black">
+                    <ul class="list">
+                        <li class="tab-button selected"  onclick="changeTab(0)">주요 공지 사항</li>
+                        <li class="tab-button" onclick="changeTab(1)">Tab Menu02</li>
+                    </ul>
+                    <div class="tab-content show">
+                        <ul th:each="NList:${NList}">
+                            <li th:text="${NList.subject}"></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <p>Menu02 설명내용</p>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div id="new_event_box">
+                <h2>새로운 이벤트</h2>
+                <div class="event_slide_box">
+                    <th:block th:each="event : ${eventList}">
+                        <a th:href="@{/detail?restNo={restNo}(restNo=${event.getRestNo().getRestNo()})}">
+                            <div class="mySlides fade">
+                                <img th:src="'data:image/png;base64,' + ${event.getBase64Image()}" alt="Event Image"/>
+                                <span>[[${event.getRestNo().getRestName()}]]<[[${event.getEventTitle()}]]></span>
+                            </div>
+                        </a>
+
+                    </th:block>
+                </div>
+            </div>
+
+
+            <div id="random_box">
+
+                <h2>추천 식당</h2><br><br><br>
+
+                <h2 id="clickText">click!</h2>
+                <p id="restName" th:text="${randomData.restName}" style="display:none;"></p>
+            </div>
+
+
+        </div>
+        <hr>
+
+        <div class="slideshow">
+            <div class="background">
+                <div th:replace="~{/include/detail_review_template::detailReviewTemplate(${revList1}, 1)}"></div>
+            </div>
+        </div>
+
+        <div class="slideshow">
+            <div class="background">
+                <div th:replace="~{/include/detail_review_template::detailReviewTemplate(${revList2}, 1)}"></div>
+            </div>
+        </div>
+
+        <div class="slideshow">
+            <div class="background">
+                <div th:replace="~{/include/detail_review_template::detailReviewTemplate(${revList3}, 1)}"></div>
+            </div>
+        </div>
+
+
+        <!--/*[+
+                추천(슬라이드 형식)<br> 가게예약, 좋아요 많은 순<br>
+                전체 가게 중에서 예약이 많고, 좋아요를 많이 받은 순(10개 정도)<br>
+                가게 클릭 시 해당 가게 상세보기 페이지로 전환<br>
+                이전, 다음 버튼 필요함
+        +]*/-->
+
+    </div>
+
+
+    <div class="right_menu_list">
+        <button onclick="onMenuListButton()"><</button>
+        <div class="slideshow" style="width: 0px;">
+
+        </div>
+    </div>
+    <script>
+        function addWishList(compo, restNo) {
+            let newDiv = compo.closest(".reviewT").cloneNode(true);
+            newDiv.querySelector("span[onclick]").remove();
+            newDiv.querySelectorAll(".reviewT>p").forEach(elem => elem.remove());
+            newDiv.querySelector(".overtip").style.opacity = "0";
+            document.querySelector(".right_menu_list .slideshow").appendChild(newDiv)
+        }
+
+        function onMenuListButton() {
+            let d = document.querySelector(".right_menu_list button").checked | 0;
+            document.querySelector(".right_menu_list button").checked = !d;
+            document.querySelector(".right_menu_list .slideshow").style = "width: " + (d ? "0" : "328") + "px;padding-left: " + (d ? "0" : "9") + "px;";
+        }
+
+
+        //공지사항 탭
+        function changeTab(tabIndex) {
+            var tabs = document.querySelectorAll('.tab-button');
+            var contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('selected'));
+            contents.forEach(content => content.classList.remove('show'));
+
+            tabs[tabIndex].classList.add('selected');
+            contents[tabIndex].classList.add('show');
+        }
+
+
+    </script>
+</div>
+
+
+</body>
+</html>
+
+
+
+

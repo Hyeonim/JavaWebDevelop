@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/owner/viewRest}">
+<div class="menu-container" th:fragment="menuContent">
+
+<form id="addMenuForm" th:action="@{/owner/viewRest/addMenu}" method="post">
+    <label>메뉴 이름 : </label><input type="text" name="menuName"><br/>
+    <label>메뉴 가격 : </label><input type="number" name="menuPrice"><br/>
+    <input type="button" value="등록" onclick="submitMenuForm()">
+    <input type="button" value="취소" th:onclick="|location.href='@{/owner/viewRest}'|" >
+</form>
+
+<script>
+        function submitMenuForm() {
+            let form = document.getElementById("addMenuForm");
+            if (form) { // Form 존재 여부 확인
+                if (confirm("등록하시겠습니까?")) {
+                    form.submit();
+                }
+            } else {
+                console.error("Form element not found!");
+            }
+        }
+</script>
+</div>
+</html>

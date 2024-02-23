@@ -1,0 +1,96 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<div th:fragment="detailContent">
+    <div id="c">
+        <div id="main" style="padding-top: 66px;">
+            <div id="img-cont">
+                <img th:attr="mysrc=${dinning.base64Image}" alt="식당 이미지"/>
+            </div>
+            <div style="text-align: left; margin-left: 40px; padding-top: 10px;">
+                <h1 th:text="${dinning.restName}"></h1>
+                <!--/*[+
+                <ion-icon name="navigate-circle-outline"></ion-icon>
+                <p th:text="${dinning.restAddr}"></p><br>
+
+                <ion-icon name="call-outline"></ion-icon>
+                <p th:text="${dinning.restTel}"></p><br>
+
+                <ion-icon name="accessibility-outline"></ion-icon>
+                <p th:text="'자리 : ' + ${dinning.restSeat}"></p><br>
+
+                <ion-icon name="fast-food-outline"></ion-icon>
+                <p th:text="${dinning.restMenu}"></p><br>
+                <ion-icon name="list-outline"></ion-icon>
+                <p th:text="${dinning.restCategory}"></p><br>
+                +]*/-->
+
+                <p><ion-icon name="list-outline"></ion-icon>[[${dinning.restCategory}]]</p>
+                <p><ion-icon name="call-outline"></ion-icon>[[${dinning.restTel}]]</p>
+                <p style="display: inline-block"><ion-icon name="fast-food-outline"></ion-icon>
+                    <th:block th:if="${menuList.isEmpty()}">
+                        등록된 메뉴가 없습니다.
+                    </th:block>
+                    <th:block th:unless="${menuList.isEmpty()}">
+                        <th:block th:each="menu : ${menuList}" th:object="${menu}">
+                            <label class="menuName">[[*{getMenuName()}]]</label>:
+                            <label class="menuPrice">[[*{getMenuPrice()}]]</label> <th:block th:text="${!menuStat.last?'/':''}"></th:block>
+                        </th:block>
+                    </th:block>
+                </p>
+                <p><ion-icon name="accessibility-outline"></ion-icon><th:block th:text="${dinning.restSeat == null ? '현장 손님만 받는 매장입니다' : '예약가능한 자리 : '+dinning.restSeat}"></th:block></p>
+                <p><ion-icon name="navigate-circle-outline"></ion-icon>[[${dinning.restAddr}]]</p>
+                <br>
+            </div>
+
+            <!--/*[+
+            <button th:class="${dinning.restSeat == null ? 'no' : ''}" th:onclick="|location.href='@{/reserve/{restNo}(restNo=${dinning.restNo})}'|"
+                    th:text="${dinning.restSeat == null ? '예약불가' : '예약하기'}"></button>
+            +]*/-->
+            <th:block th:with="condition=${dinning.restSeat}!=null, nextLocate=|/reserve/${dinning.restNo}|">
+                <th:block th:if="${condition}">
+                    <button th:onclick="location.href=[[${nextLocate}]]" th:text="예약하기">
+                </th:block>
+                <th:block th:unless="${condition}">
+                    <button th:onclick="location.href=[[${nextLocate}]]" th:text="예약불가" th:class="no" >
+                </th:block>
+                    </button>
+            </th:block>
+            <h2 style="margin-top: 50px">찾아 오는 길</h2>
+            <div id="map">
+
+            </div>
+
+            <div style="text-align: left; margin-left: 40px;">
+                <h2>영업 정보</h2>
+                <p th:text="'영업 시간 : ' + ${dinning.restTime}"></p>
+                <p th:text="'휴무일 : ' + ${dinning.restOffDays}"></p>
+                <p th:text="'주차 정보 : ' +${dinning.restParking}"></p><br>
+            </div>
+
+            <div th:if="${!eventList.isEmpty()}"  style="text-align: left; margin-left: 40px;">
+                <h2>이벤트</h2>
+                <th:block th:each="event : ${eventList}">
+                    <div class="event-box" style="display: inline-block; width:30%; height:300px; overflow: hidden; text-align: center;">
+                        <img th:if="${event.getEventImg() != null}" th:src="'data:image/jpeg;base64,' + ${event.getBase64Image()}" alt="Event Image"
+                             style="width:100%; height:80%; object-fit:cover; object-position: center;"><br/>
+                        <label style="height:20%;justify-content: center">[[${event.getEventTitle()}]]</label>
+                    </div>
+                </th:block>
+            </div>
+
+            <div style="border: solid 2px #f2f2f2; border-radius: 10px; margin: 40px 40px 10px 24px; text-align: left; " >
+                <div style="border-bottom: solid 1px black">
+                    <h2 style="padding-top: 20px; padding-left: 20px" th:text="${list.size()} + '명의 방문자가 평가 '"></h2>
+                    <p th:text="'총 평점 :  ' +${reg}"></p>
+                </div>
+
+                <div id="review">
+                    <div th:replace="~{/include/detail_review_template::detailReviewTemplate(${list},0)}"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="/js/imglazy.js">
+    </script>
+</div>
+</html>

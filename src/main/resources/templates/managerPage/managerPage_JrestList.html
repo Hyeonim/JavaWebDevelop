@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>가게 목록</title>
+</head>
+
+<div th:fragment="managerContent">
+    <div id="right3" style="margin-right: 100px">
+
+        <h1 style="margin-top: 100px">운영 중인 가게 목록</h1>
+        <hr>
+
+        <input type="text" id="searchInput" placeholder="가게 이름으로 검색" onchange="searchDinning()">
+        <button onclick="searchDinning()">검색</button>
+
+            <table  id="dinningTable"  style="text-align: center;">
+            <thead>
+            <tr>
+                <th>가게 번호</th>
+                <th>가게 이름</th>
+                <th>가게 주소</th>
+                <th>가게 전화번호</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dinning : ${dinningList}"
+                th:onclick="'javascript:redirectToJumrestDetail(\'' + ${dinning.restNo} + '\')'">
+                <td th:text="${dinning.restNo}"></td>
+                <td th:text="${dinning.restName}"></td>
+                <td th:text="${dinning.restAddr}"></td>
+                <td th:text="${dinning.restTel}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${!dinningList.isEmpty()}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!dinningList.hasPrevious} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{|?page=${dinningList.number-1 < 0 ? 0 : dinningList.number-1}|}">
+                        <span>이전</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, dinningList.totalPages-1)}"
+                    th:if="${page >= dinningList.number-5 and page <= dinningList.number+5}"
+                    th:classappend="${page == dinningList.number} ? 'active'"
+                    class="page-item">
+                    <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                </li>
+                <li class="page-item" th:classappend="${!dinningList.hasNext} ? 'disabled'">
+                    <a class="page-link" th:href="@{|?page=${dinningList.number+1}|}">
+                        <span>다음</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</html>
+
+
+

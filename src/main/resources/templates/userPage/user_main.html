@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{userPage/Layout_userPage}">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css"
+          integrity="sha512-xr26aDbJiQqN9m6SuZ2VbNzGaV7WKFpAERo1l4pgrqBpSB1lCZI72aL2v2la6ApW7vFN3reIab8Eai5EaFJ3eA=="
+          crossorigin="anonymous"/>
+
+    <link th:href="@{/css/userPage/userPageButton.css}" rel="stylesheet">
+    <!--    <link rel="stylesheet" href="/static/css/userPage/userPageButton.css">-->
+    <style>
+        .grid-item {
+            display: inline-block;
+            width: 160px; /* 적절한 크기로 조정해 주세요 */
+            height: 160px; /* 가로세로 크기를 동일하게 설정하여 정사각형으로 만듭니다 */
+            text-align: center;
+            line-height: 150px;
+            text-decoration: none;
+            margin: 3px; /* 각 아이템 간 간격을 조정해 주세요 */
+            position: relative; /* 아이콘과 텍스트를 포지셔닝하기 위해 */
+
+            border: 1px solid rgba(72, 119, 166, 0.89); /* 테두리 */
+            color: rgba(72, 119, 166, 0.89); /* 아이콘 색상 */
+            background-color: rgba(108, 180, 217, 0.42); /* 호버 이펙팅 색상 */
+        }
+
+        .round-top-left i {
+            position: absolute;
+            top: 40%; /* 아이콘을 수직으로 가운데로 위치시킵니다. */
+            left: 50%; /* 아이콘을 수평으로 가운데로 위치시킵니다. */
+            transform: translate(-50%, -50%); /* 아이콘을 정확한 가운데로 조정합니다. */
+            font-size: 40px;
+        }
+
+        .round-top-right i {
+            position: absolute;
+            top: 40%; /* 아이콘을 수직으로 가운데로 위치시킵니다. */
+            left: 50%; /* 아이콘을 수평으로 가운데로 위치시킵니다. */
+            transform: translate(-50%, -50%); /* 아이콘을 정확한 가운데로 조정합니다. */
+            font-size: 40px;
+        }
+
+        .round-bottom-left i {
+            position: absolute;
+            top: 40%; /* 아이콘을 수직으로 가운데로 위치시킵니다. */
+            left: 50%; /* 아이콘을 수평으로 가운데로 위치시킵니다. */
+            transform: translate(-50%, -50%); /* 아이콘을 정확한 가운데로 조정합니다. */
+            font-size: 40px;
+        }
+
+        .round-bottom-right i {
+            position: absolute;
+            top: 40%; /* 아이콘을 수직으로 가운데로 위치시킵니다. */
+            left: 50%; /* 아이콘을 수평으로 가운데로 위치시킵니다. */
+            transform: translate(-50%, -50%); /* 아이콘을 정확한 가운데로 조정합니다. */
+            font-size: 40px;
+        }
+
+        .round-top-left {
+            border-top-left-radius: 20px; /* 왼쪽 위 모서리를 둥글게 만듭니다. */
+        }
+
+        .round-top-right {
+            border-top-right-radius: 20px; /* 오른쪽 위 모서리를 둥글게 만듭니다. */
+        }
+
+        .round-bottom-left {
+            border-bottom-left-radius: 20px; /* 왼쪽 아래 모서리를 둥글게 만듭니다. */
+        }
+
+        .round-bottom-right {
+            border-bottom-right-radius: 20px; /* 오른쪽 아래 모서리를 둥글게 만듭니다. */
+        }
+
+        .text-below {
+            width: 64px;
+            text-align: center;
+            font-size: 15px;
+            margin-top: 7px; /* 텍스트와 아이콘 사이 간격 조정 */
+            text-decoration: none;
+        }
+
+        .userBox {
+            display: flex;
+            border-radius: 0.5rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .pointBox {
+            display: flex;
+            /*border-radius: 0.5rem;*/
+            background-color: #fff;
+            padding: 1rem 1.5rem 1.2rem 1rem;
+            justify-content: space-between;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .point {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 117px;
+            font-size: 40px
+        }
+
+        .resBox {
+            display: block;
+            margin: 30px auto 0;
+            width: 170px;
+            -webkit-box-sizing: border-box;
+            border-radius: 10px;
+            height: 40px;
+            line-height: 38px;
+            padding: 0 18px;
+            text-decoration: none;
+            cursor: pointer;
+            /*border: 1px solid #333333;*/
+            /*border: 1px solid rgba(72, 119, 166, 0.89); !* 테두리 *!*/
+            color: rgba(98, 98, 98, 0.65) !important;
+            text-align: center;
+            vertical-align: middle;
+            /*background-color: rgba(74, 147, 183, 0.67);*/
+            background-color: rgb(121 239 180 / 67%);
+
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .content-container{
+            background-image: url("/img/simple-green-gradient-background-vector-for-business_53876-174936.jpg"); /* 배경이미지 */
+            height: 790px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+<th:block th:fragment="content">
+
+    <div id="u">
+
+        <div class="userBox" style="display: flex">
+            <div style="text-align: center; padding: 10px; width: 60%; border-right: 1px solid lightgray; ">
+                <div style="display: flex; font-size: 18px; font-weight: bold"
+                     th:text="${user.getUserName()} + '님 반가워요'"></div>
+                <div style="text-align: center; font-size: 18px; margin-top: 1rem;">현재 예약 중인 식당</div>
+                <div style="display: flex; justify-content: center">
+                    <div class="resBox" th:if="${restaurants != null and restaurants.size() > 0}"
+                         th:text="${restaurants.get(0).restName}"></div>
+                    <div class="resBox" th:if="${restaurants == null or restaurants.size() == 0}">없음</div>
+                </div>
+            </div>
+
+            <div style="width: 40%;">
+                <div class="pointBox">
+                    <div>MY포인트</div>
+                    <a href="#"><img src="/img/setup.png"></a>
+                </div>
+                <div class="point">
+                    <div>150P</div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div id="main"
+             style="display: flex; align-items: center; justify-content: center; flex-direction: column; height: 76vh; margin-top: -170px;">
+
+
+            <div id="content" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin-top: 150px;">
+                <a id="myReservation" th:href="@{/user/user_posts}"
+                   class="grid-item round-top-left button button--pipaluk button--inverted button--round-l button--text-thick button--text-upper">
+                    <i class="fas fa-calendar"></i>
+                    <div class="text-below">My예약</div>
+                </a>
+                <a id="myReview" th:href="@{/user/user_review/{userNo}(userNo=${user.userNo})}"
+                   class="grid-item round-top-right button button--pipaluk button--inverted button--round-l button--text-thick button--text-upper">
+                    <i class="fas fa-star"></i>
+                    <div class="text-below">My리뷰</div>
+                </a>
+                <a id="myInquiry" th:href="@{/QA/user_qa/{userNo}(userNo=${user.userNo})}"
+                   class="grid-item round-bottom-left button button--pipaluk button--inverted button--round-l button--text-thick button--text-upper">
+                    <i class="fas fa-question-circle"></i>
+                    <div class="text-below">My문의</div>
+                </a>
+                <a id="myInfo" th:href="@{/user/user_info/{userNo}(userNo=${user.userNo})}"
+                   class="grid-item round-bottom-right button button--pipaluk button--inverted button--round-l button--text-thick button--text-upper">
+                    <i class="fas fa-user-cog"></i>
+                    <div class="text-below">My정보</div>
+                </a>
+                <!--                <a id="" th:href="" class="grid-item round-bottom-right">My 정보 관리</a>-->
+            </div>
+
+        </div>
+
+    </div>
+
+
+</th:block>
+</body>
+
+</html>

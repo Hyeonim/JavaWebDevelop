@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{userPage/Layout_userPage2}">
+
+<th:block th:fragment="content">
+
+<h1>My 정보</h1>
+    <a th:href="@{/user/userPage/{userNo}(userNo=${user.get().userNo})}">돌아가기</a><br>
+    <div class="formDiv">
+    <form th:action="@{/user/user_update/{userNo}(userNo=${user.get().getUserNo()})}" method="post" enctype="multipart/form-data">
+    <label>유저 번호:</label>
+    <input type="text" th:value="${user.get().getUserNo()}" readonly name="userNo"/><br>
+    <label>이름:</label>
+    <input type="text" th:value="${user.get().getUserName()}" name="userName"/><br>
+    <label>ID:</label>
+    <input type="text" th:value="${user.get().getUserId()}" readonly name="userId"/><br>
+    <label>Password:</label>
+    <input type="password" th:value="${user.get().getUserPassword()}" readonly name="userPassword"/><br>
+    <label>이메일:</label>
+    <input type="email" th:value="${user.get().getUserEmail()}" name="userEmail"/><br>
+    <label>전화번호:</label>
+    <input type="tel" th:value="${user.get().getUserTel()}" name="userTel"/><br>
+    <input type="text" th:value="${user.get().getUserAuth()}" name="userAuth" hidden="hidden"/><br>
+    <label>이미지:</label><br>
+    <img th:if="${user.get().getUserImg() != null}" th:src="'data:image/jpeg;base64,' + ${user.get().base64Image}" alt="User Image" style="max-width: 200px; max-height: 200px;"><br>
+    <input type="file" name="file"><br>
+    <button type="submit">Update</button>
+</form>
+    </div>
+
+</th:block>
+</html>
+
+
+

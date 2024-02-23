@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{owner/myPage_layout}">
+
+<th:block th:fragment="content">
+
+    <div class="formDiv">
+    <form id="updateEventForm" th:action="@{/owner/updateEvent/{eventNo}(eventNo=${event.getEventNo()})}" method="post" enctype="multipart/form-data">
+        <p><label>제목</label><input type="text" name="eventTitle" th:value="${event.getEventTitle()}"></p>
+        <p><label>이벤트 시작일</label><input id="startTime" type="date" name="strStartTime" th:min="${#temporals.format(event.getEventStartTime(), 'yyyy-MM-dd')}" th:value="${#temporals.format(event.getEventStartTime(), 'yyyy-MM-dd')}"></p>
+        <p><label>이벤트 마감일</label><input id="endTime" type="date" name="strEndTime" th:value="${#temporals.format(event.getEventEndTime(), 'yyyy-MM-dd')}"></p>
+        <p><label>내용</label><textarea name="eventContent" rows="5">[[${event.getEventContent()}]]</textarea></p>
+        <p><label>이미지</label><input type="file" name="file" id="file"></p>
+<!--        <p><label></label><img id="preview"-->
+<!--                        th:src="${event.getEventImg() == null ? '/img/no_image.png':'data:image/jpeg;base64,'+ event.getBase64Image()}"-->
+<!--                        style="height: 240px;border:1px solid gray;" alt="가게 사진"/></p>-->
+        <p><label id="last"></label><img id="preview" th:if="${event.getEventImg() != null}"
+                        th:src="'data:image/jpeg;base64,'+ ${event.getBase64Image()}"
+                               onerror="this.src='/img/no-image.png'" alt="가게 사진"/></p>
+
+ <input type="hidden" name="eventNo" th:value="${event.getEventNo()}">
+ <input type="button" value="등록" onclick="submitRestForm()">
+ <input type="button" value="취소" th:onclick="|location.href='@{/owner/viewEvent/{eventNo}(eventNo=${event.getEventNo()})}'|">
+</form>
+</div>
+
+<script>
+    let today = new Date().toISOString().split('T')[0];
+    // input 태그의 min 속성에 오늘 날짜 설정
+    document.getElementById("endTime").setAttribute("min", today);
+
+let preview = document.getElementById('preview');
+if(!preview) {
+    var lastLabel = document.getElementById('last');
+    var img = document.createElement('img');
+    img.id = 'preview';
+    img.alt = '가게 사진';
+    img.src = '/img/no_image.png';
+
+    lastLabel.parentNode.insertBefore(img, lastLabel.nextSibling);
+}
+ function submitRestForm() {
+     if(confirm("등록하시겠습니까?")) {
+         let form = document.getElementById("updateEventForm");
+         form.submit();
+     }
+ }
+
+ function previewImage(input) {
+     if (input.files && input.files[0]) {
+         var reader = new FileReader();
+
+         reader.onload = function (e) {
+             document.getElementById('preview').setAttribute('src', e.target.result);
+         }
+
+         reader.readAsDataURL(input.files[0]);
+     }
+ }
+
+ document.getElementById('file').addEventListener('change', function () {
+     previewImage(this);
+ });
+
+</script>
+</th:block>
+</html>

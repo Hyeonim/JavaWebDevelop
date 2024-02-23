@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{userPage/Layout_userPage2}">
+
+<th:block th:fragment="content">
+
+    <h1>My 문의</h1>
+    <a th:href="@{/QA/user_qa_form/{userNo}(userNo=${Num})}">문의추가  </a>
+<!--    <a th:href="@{/user/userPage/{userNo}(userNo=${userNo.getUserNo()})}">돌아가기</a><br>-->
+
+
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>문의 날짜</th>
+            <th>문의 처리 상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="QAs, iterStat : ${QA}">
+            <td th:text="${iterStat.count + (QA.getNumber() * QA.getSize())}"></td>
+            <td th:text="${QAs.qaTitle}"></td>
+            <td th:text="${QAs.qaContent}"></td>
+            <td th:text="${QAs.qaWriteTime}"></td>
+            <td>
+                <a th:if="${QAs.qaStatus}">
+                    <span>처리완료</span>
+                </a>
+                <span th:unless="${QAs.qaStatus}">처리중</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${!QA.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!QA.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|?page=${QA.number-1 < 0 ? 0 : QA.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, QA.totalPages-1)}"
+                th:if="${page >= QA.number-5 and page <= QA.number+5}"
+                th:classappend="${page == QA.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page + 1}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!QA.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${QA.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</th:block>
+</html>

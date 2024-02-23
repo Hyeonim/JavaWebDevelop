@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{userPage/Layout_userPage}">
+
+<th:block th:fragment="content">
+
+<div class="formDiv">
+    <h1>문의 하기</h1>
+<form th:action="@{/QA/user_qa_add}" method="post" enctype="multipart/form-data">
+    <label>ID:</label>
+    <input type="text" th:value="${QA_userNo.get().getUserId()}" readonly/><br>
+    <label>이름:</label>
+    <input type="text" th:value="${QA_userNo.get().getUserName()}" readonly/><br>
+    <label hidden="hidden">유저번호</label>
+    <input type="text" th:value="${QA_userNo.get().getUserNo()}" name="userNo" hidden="hidden"/><br>
+    <label>제목:</label>
+    <input type="text" name="qa_title"/><br>
+    <label>내용:</label>
+    <input type="text" name="qa_content"/><br>
+    <button type="submit">확인</button>
+</form>
+</div>
+
+</th:block>
+</html>
+
+
+

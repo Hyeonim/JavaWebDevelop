@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{owner/myPage_layout}">
+
+<th:block th:fragment="content">
+
+    <div class="formDiv">
+    <form id="addEventForm" th:action="@{/owner/addEvent}" method="post" enctype="multipart/form-data">
+        <p><label>제목</label><input type="text" name="eventTitle"></p>
+        <p><label>이벤트 시작일</label><input id="startTime" type="date" name="strStartTime"></p>
+        <p><label>이벤트 마감일</label><input id="endTime" type="date" name="strEndTime"></p>
+        <p><label>내용</label><textarea name="eventContent" rows="5"></textarea></p>
+        <p><label>이미지</label><input type="file" name="file" id="file"></p>
+        <p><label></label><img id="preview" src="/img/no_image.png" alt="Rest Image"></p>
+        <input type="button" value="등록" onclick="submitRestForm()">
+        <input type="button" value="취소" th:onclick="|location.href='@{/owner/eventList}'|">
+    </form>
+    </div>
+
+    <script>
+        let today = new Date().toISOString().split('T')[0];
+        // input 태그의 min 속성에 오늘 날짜 설정
+        document.getElementById("startTime").setAttribute("min", today);
+        document.getElementById("endTime").setAttribute("min", today);
+
+        function submitRestForm() {
+            if(confirm("등록하시겠습니까?")) {
+                let form = document.getElementById("addEventForm");
+                form.submit();
+            }
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('preview').setAttribute('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById('file').addEventListener('change', function () {
+            previewImage(this);
+        });
+    </script>
+</th:block>
+</html>
